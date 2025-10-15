@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <base href="/ID202_classicUIproject/">
-    <link rel="stylesheet" href="effects.css">
-    <script src="/ID202_classicUIproject/main.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ID202_classicUIproject</title>
+    
+    <link rel="stylesheet" href="/ID202_classicUIproject/effects.css">
+    <link rel="stylesheet" href="/ID202_classicUIproject/styles.css">
+    
     <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css"> <!-- CSS 파일 링크 -->
-</head>
+    
+    </head>
 <body>
     <div class="loading">
         <div id="loading-text"></div>
@@ -16,9 +18,7 @@
 
     <div class="overlaygrey" style="display: none;"></div>
 
-    <div class="login" style="display: none;"> <!-- 초기 상태에서 숨김 -->
-        <div class="reloadButton" onclick="goBackToLoading()"></div> <!-- 추가된 작은 검은 원 -->
-        <div class="login-box">
+    <div class="login" style="display: none;"> <div class="reloadButton" onclick="goBackToLoading()"></div> <div class="login-box">
             <div class="inner-box">
                 <div style="font-size:19px; color:black">Welcome SEO</div>
                 <div style="font-size: 19px; margin-top: 25px; color:black">Passwordㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ</div>
@@ -28,72 +28,67 @@
                      onclick="changeForgotPasswordText()" 
                      onmouseover="changeTextColorOnHover('#ededed')" 
                      onmouseout="changeTextColorOnHover('black')">
-                    <span class="highlight"></span>
-                    Forgot your password?
+                     <span class="highlight"></span>
+                     Forgot your password?
                 </div>
                 <button onclick="checkPassword()">OK</button>
             </div>
         </div>
     </div>
 
-    <div class="overlaygrey" style="display: none;"></div> <!-- 초기 상태는 숨김 -->
-
-    <div class="main">
+    <div class="overlaygrey" style="display: none;"></div> <div class="main">
         <div class="menu-bar">
             <img src="https://kanye2049.com/img/apple.png" id="AppleLogo" alt="Apple Logo" style="cursor: pointer;">
             <div class="dropdown" id="dropdownMenu" style="display: none;">
                 <ul>
                     <li><dropdownbutton class="dropdown-button">About</dropdownbutton></li>
-                    <li><dropdownbutton class="dropdown-button" onclick="restart()">Restart</dropdownbutton></li> <!-- Restart 버튼 클릭 시 restart 함수 호출 -->
-                </ul>
+                    <li><dropdownbutton class="dropdown-button" onclick="restart()">Restart</dropdownbutton></li> </ul>
             </div>
             <div class="menu-item" id="seo-text">SEO</div>
             <div class="menu-item" id="current-time"></div>
         </div>
         <div class="about-box" id="AboutBox" style="display: none;">
-            <div class="about-close" id="AboutBoxQuit"></div> <!-- 닫기 버튼 -->
-            <div class="about-content">
+            <div class="about-close" id="AboutBoxQuit"></div> <div class="about-content">
                 <div class="about-title">The Macintosh Project</div>
                 <div class="about-subtitle"><a href="https://www.instagram.com/ehakdcu_xx/" target="_blank" class="highlight-link">Inseong Seo</a> in <a href="https://www.minjok.hs.kr" target="_blank" class="highlight-link">KMLA</a>, South Korea</div>
                 <div class="about-footer">ㅤ18607BㅤㅤㅤVersion Ⅱ.2.4 ©️2025 I.SEO</div>
             </div>
         </div>
-        <div id="blackScreen"></div> <!-- 검은 화면 -->
-        <img src="https://kanye2049.com/img/text.png" alt="Text Image" class="centered-image" id="centeredImage">
+        <div id="blackScreen"></div> <img src="https://kanye2049.com/img/text.png" alt="Text Image" class="centered-image" id="centeredImage">
         <div class="file-text" id="fileText">why?.txt</div>
         <div class="popup" id="popup" style="display: none;">
-          <div class="popup-header" id="popup-header">
-              <span class="file-name">Why?.txt</span>
-              <popup-close-button class="popup-close" onclick="closePopup()">X</popup-close-button>
-          </div>
-          <div class="popup-content">
-              <p>Survival Journal of KMLA Island</p>
-              <p>KANYE WON'T SAVE US.</p>
-              <p>2022-2025</p>
-              <p><strong>Day 1: Arrival</strong></p>
-              <p>I woke up today on this deserted island. I feel lost and scared. It's just me, the thatched roof, and the endless sea (mountains). At 6 AM, I heard the morning song (parachute - John K) that pierced my eardrums, but I must focus on survival. I found a chicken shop near Dukgo. My survival instincts kicked in, and I built a small shelter using branches and leaves.</p>
-              <p><strong>Day 30: Routine Established</strong></p>
-              <p>A month has passed. I’ve established a daily routine: collecting points in the morning, being late in the afternoon, and sleeping or playing games during self-study time in the evening. I’ve spotted the "Highschool Dropout" ship several times in the distance. I wanted to signal for help, but I know I need to be self-sufficient.</p>
-              <p><strong>Day 100: Learning and Adapting</strong></p>
-              <p>Two months have gone by. I’m learning a lot about this island. I’ve figured out how to catch fish with simple tools and have been experimenting with various plants for food. I had a Chicken Day, and the warm meal really helps. The sight of that ship haunts me at night.</p>
-              <p><strong>Day 200: Reflection</strong></p>
-              <p>Nearly seven months have passed. There have been ups and downs. Some days I feel strong and capable, while other days the loneliness is overwhelming. I found a journal in a bag washed ashore, which has become an outlet for my feelings and thoughts. I miss human connection, but I’ve come to cherish my independence.</p>
-              <p><strong>Day 365: One Year Mark</strong></p>
-              <p>I’ve survived for a year! I’ve emerged from Daechita. The ship appeared again, but this time I feel more resolved. I’ve realized that this isolation has given me a unique perspective on life. I’ve grown stronger emotionally and physically.</p>
-              <p><strong>Day 500: The Decision</strong></p>
-              <p>A year and a half have passed. I saw the ship again, closer this time. My heart raced, but I felt a strange calm. I’ve built a life here. I want to signal for help, but I want to see this journey through to the end. I’ve found peace in solitude and want to see how far I can go.</p>
-              <p><strong>Day 800: Almost Three Years</strong></p>
-              <p>As I approach three years, I’m filled with mixed emotions. I’ve grown significantly. I’ve learned how to thrive in this environment. The "Highschool Dropout" has become a symbol of temptation, but I’ve resisted. This island has taught me resilience, and I feel proud of my journey.</p>
-              <p><strong>Day 1000: Acceptance</strong></p>
-              <p>Today marks three years on KMLA Island. I’ve decided to stay here. The challenges have shaped me, and I’ve found purpose in this place. I’ve learned to live with nature, and I feel more alive than ever. I may be alone, but I am not lonely. I am my own person now, a survivor in every sense of the word.</p>
-              <p><strong>2024-12-12 Final Entry: Escape</strong></p>
-              <p><strong>I will never return to this place.</strong>
-              </p>
-          </div>
-          <div class="resize-handle" bottom right></div>
+            <div class="popup-header" id="popup-header">
+                <span class="file-name">Why?.txt</span>
+                <popup-close-button class="popup-close" onclick="closePopup()">X</popup-close-button>
+            </div>
+            <div class="popup-content">
+                <p>Survival Journal of KMLA Island</p>
+                <p>KANYE WON'T SAVE US.</p>
+                <p>2022-2025</p>
+                <p><strong>Day 1: Arrival</strong></p>
+                <p>I woke up today on this deserted island. I feel lost and scared. It's just me, the thatched roof, and the endless sea (mountains). At 6 AM, I heard the morning song (parachute - John K) that pierced my eardrums, but I must focus on survival. I found a chicken shop near Dukgo. My survival instincts kicked in, and I built a small shelter using branches and leaves.</p>
+                <p><strong>Day 30: Routine Established</strong></p>
+                <p>A month has passed. I’ve established a daily routine: collecting points in the morning, being late in the afternoon, and sleeping or playing games during self-study time in the evening. I’ve spotted the "Highschool Dropout" ship several times in the distance. I wanted to signal for help, but I know I need to be self-sufficient.</p>
+                <p><strong>Day 100: Learning and Adapting</strong></p>
+                <p>Two months have gone by. I’m learning a lot about this island. I’ve figured out how to catch fish with simple tools and have been experimenting with various plants for food. I had a Chicken Day, and the warm meal really helps. The sight of that ship haunts me at night.</p>
+                <p><strong>Day 200: Reflection</strong></p>
+                <p>Nearly seven months have passed. There have been ups and downs. Some days I feel strong and capable, while other days the loneliness is overwhelming. I found a journal in a bag washed ashore, which has become an outlet for my feelings and thoughts. I miss human connection, but I’ve come to cherish my independence.</p>
+                <p><strong>Day 365: One Year Mark</strong></p>
+                <p>I’ve survived for a year! I’ve emerged from Daechita. The ship appeared again, but this time I feel more resolved. I’ve realized that this isolation has given me a unique perspective on life. I’ve grown stronger emotionally and physically.</p>
+                <p><strong>Day 500: The Decision</strong></p>
+                <p>A year and a half have passed. I saw the ship again, closer this time. My heart raced, but I felt a strange calm. I’ve built a life here. I want to signal for help, but I want to see this journey through to the end. I’ve found peace in solitude and want to see how far I can go.</p>
+                <p><strong>Day 800: Almost Three Years</strong></p>
+                <p>As I approach three years, I’m filled with mixed emotions. I’ve grown significantly. I’ve learned how to thrive in this environment. The "Highschool Dropout" has become a symbol of temptation, but I’ve resisted. This island has taught me resilience, and I feel proud of my journey.</p>
+                <p><strong>Day 1000: Acceptance</strong></p>
+                <p>Today marks three years on KMLA Island. I’ve decided to stay here. The challenges have shaped me, and I’ve found purpose in this place. I’ve learned to live with nature, and I feel more alive than ever. I may be alone, but I am not lonely. I am my own person now, a survivor in every sense of the word.</p>
+                <p><strong>2024-12-12 Final Entry: Escape</strong></p>
+                <p><strong>I will never return to this place.</strong>
+                </p>
+            </div>
+            <div class="resize-handle" bottom right></div>
         </div>
     </div>
 
-    <script src="script.js"></script> <!-- JavaScript 파일 링크 -->
-</body>
+    <script src="/ID202_classicUIproject/main.js"></script>
+    </body>
 </html>
