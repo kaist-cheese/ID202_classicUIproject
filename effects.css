@@ -1,0 +1,417 @@
+body {
+    margin: 0;
+    height: 600px;
+    width: 800px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: black;
+    color: white;
+    font-family: "VT323", monospace;
+    font-size: 19px;
+    user-select: none; /* 전체 드래그 선택 방지 */
+  .loading,
+  .login,
+  .main {
+    display: none;
+    height: 600px;
+    width: 800px;
+    border-radius: 10px;
+    position: absolute;
+  }
+  .loading {
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    z-index: 10;
+    background-color: black;
+  }
+  .login {
+    border-radius: 10px;
+    background-color: #959795;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 5;
+  }
+  .inner-box {
+    width: 500px;
+    height: 220px;
+    background: #ededed;
+    border: 2px solid black;
+    outline: 2px solid #ededed;
+    box-shadow: 0 0 0 4px black;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  input {
+    width: 246px;
+    height: 22px;
+    background-color: transparent;
+    border: 2px solid black;
+    font-size: 26px;
+    margin-bottom: 2px;
+    outline: none;
+  }
+  .main {
+    background-color: #959795;
+    display: flex;
+  }
+  button {
+    margin-top: 25px;
+    width: 116px;
+    height: 20px;
+    border: 1px solid black;
+    outline: 2px solid #ededed;
+    border-radius: 5px;
+    box-shadow: 0 0 0 4px black;
+    cursor: pointer;
+    font-family: "VT323", monospace;
+    font-size: 17px;
+    position: relative;
+    margin-bottom: 20px;
+    color: black;
+  }
+  button:hover {
+    background-color: black;
+    color: #ededed;
+  }
+  .forgot-password {
+    cursor: pointer;
+    color: black;
+    position: relative;
+  }
+  .forgot-password:hover {
+    background-color: Black;
+    color: #ededed;
+  }
+  .no-hover:hover {
+    background-color: transparent; /* 또는 원하는 색상 */
+    color: black; /* 또는 원하는 색상 */
+  }
+  .overlaygrey {
+    position: flex-start;
+    width: 800px;
+    height: 600px;
+    background-color: #959795;
+    display: none;
+    z-index: 15;
+    border-radius: 10px;
+  }
+  .reloadButton {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background-color: #666666;
+    bottom: 20px; /* 하단 위치 조정 */
+    right: 20px; /* 우측 위치 조정 */
+    cursor: pointer;
+  }
+  .menu-bar {
+    width: 100%;
+    height: 30px; /* 메뉴 바 높이 */
+    background-color: #ededed; /* 배경색 */
+    display: flex;
+    align-items: center;
+    z-index: 1px; /* 다른 요소 위에 표시 */
+    border-top-left-radius: 10px; /* 왼쪽 상단 모서리 둥글게 */
+    border-top-right-radius: 10px; /* 오른쪽 상단 모서리 둥글게 */
+    justify-content: flex-end; /* 오른쪽 정렬 */
+  }
+  .menu-item {
+    display: flex; /* flexbox 사용 */
+    align-items: center; /* 수직 정렬 */
+    color: black; /* 텍스트 색상 */
+    margin-left: 10px; /* 메뉴 항목 간격 (오른쪽 정렬을 위해 변경) */
+    margin-right: 10px;
+  }
+  .dropdown {
+    position: absolute;
+    top: 30px; /* 메뉴 바 아래 위치 */
+    left: 0; /* 왼쪽 정렬 */
+    background-color: white; /* 배경색 */
+    z-index: 30; /* 다른 요소 위에 표시 */
+  }
+  .dropdown ul {
+    list-style: none; /* 기본 리스트 스타일 제거 */
+    padding: 0;
+    margin: 0px;
+    color: black;
+  }
+  .dropdown li {
+    padding: 5px 20px 5px 5px; /* 패딩 */
+    cursor: pointer; /* 커서 변경 */
+  }
+  #AppleLogo {
+    z-index: 4; /* AppleLogo의 z-index를 높임 */
+    position: absolute; /* 절대 위치 설정 */
+    top: 4px; /* 상단에 위치 */
+    left: 15px; /* 왼쪽에 위치 */
+    cursor: pointer; /* 커서 스타일 추가 */
+    width: 15px; /* 너비를 15px로 설정 */
+    height: auto; /* 비율 유지 */
+    clip-path: inset(0 0 50% 0); /* 윗부분 절반만 보이도록 설정 */
+  }
+  .black-square {
+    position: absolute;
+    top: 0; /* 드롭다운 메뉴가 열릴 때 위치 */
+    left: 7px; /* 왼쪽에 위치 */
+    width: 30px; /* AppleLogo와 같은 너비 */
+    height: 30px; /* 검은 사각형의 높이 */
+    background-color: black; /* 검은색 배경 */
+    z-index: 2px; /* AppleLogo 뒤에 위치 */
+    display: none; /* 초기 상태에서 숨김 */
+  }
+  .about-box {
+    position: fixed; /* 화면 중앙에 고정 */
+    top: 50%; /* 화면 중앙 */
+    left: 50%; /* 화면 중앙 */
+    width: 300px; /* 너비 */
+    height: 200px; /* 높이 */
+    background-color: #ededed; /* 배경색 */
+    border: 2px solid black; /* 테두리 */
+    box-shadow: 4px 4px 0 black; /* 그림자 */
+    z-index: 100; /* 다른 요소 위에 표시 */
+    display: none; /* 초기 상태에서 숨김 */
+    color: black;
+  }
+  .dropdown-button {
+    /*padding: 5px 20px 5px 20px;*/
+  }
+  .dropdown-button:hover {
+    background-color: black; /* 마우스 오버 시 배경색 */
+    color: white; /* 마우스 오버 시 글씨 색상 */
+  }
+  .about-box {
+    position: fixed; /* 화면 중앙에 고정 */
+    top: 300px; /* 화면 중앙 */
+    left: 400px; /* 화면 중앙 */
+    transform: translate(-50%, -50%); /* 중앙 정렬 */
+    width: 300px; /* 너비 */
+    height: 180px; /* 높이 */
+    background-color: #ededed; /* 배경색 */
+    border: 2px solid black; /* 테두리 */
+    box-shadow: 4px 4px 0 black; /* 그림자 */
+    z-index: 100; /* 다른 요소 위에 표시 */
+    display: none; /* 초기 상태에서 숨김 */
+  }
+  .about-content {
+    display: flex;
+    flex-direction: column; /* 세로 정렬 */
+    justify-content: center; /* 가운데 정렬 */
+    align-items: center; /* 가운데 정렬 */
+    height: 100%; /* 전체 높이 */
+  }
+  .about-title {
+    font-size: 21px; /* 폰트 크기 */
+    margin-top: 50px;
+    margin-bottom: 6px; /* 아래 여백 */
+  }
+  .about-subtitle {
+    font-size: 15px; /* 폰트 크기 */
+    margin-bottom: 60px; /* 아래 여백 */
+  }
+  .about-footer {
+    font-size: 18px; /* 폰트 크기 */
+  }
+  .about-close {
+    position: absolute;
+    top: 5px; /* 상단 여백 */
+    left: 5px; /* 왼쪽 여백 */
+    width: 10px; /* 너비 */
+    height: 10px; /* 높이 */
+    background-color: black; /* 검은색 */
+    cursor: pointer; /* 커서 포인터 */
+  }
+  .highlight-link {
+    text-decoration: none; /* 기본 링크 스타일 제거 */
+    color: inherit; /* 기존 색상 유지 */
+    position: relative; /* 하이라이트 효과를 위한 위치 설정 */
+  }
+  
+  .highlight-link:hover {
+    color: #ededed; /* 마우스 오버 시 색상 변경 */
+  }
+  
+  .highlight-link:hover::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 1); /* 검은색 하이라이트 효과 */
+    z-index: -1; /* 텍스트 뒤에 위치하게 설정 */
+  }
+  #blackScreen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 800px;
+    height: 600px;
+    background-color: black;
+    border-radius: 10px; /* 둥근 모서리 */
+    z-index: 9999; /* 상위 레이어 */
+    display: none; /* 초기에는 보이지 않음 */
+  }
+  .centered-image {
+    width: 30px;
+    display: block; /* 블록 요소로 설정 */
+    margin: 20px auto 0; /* 위쪽 여백 20px, 아래쪽 여백 0, 자동으로 중앙 정렬 */
+    position: absolute; /* 절대 위치 지정 */
+    top: 50px; /* 부모 요소의 50% 위치 */
+    left: 700px; /* 부모 요소의 50% 위치 */
+    height: auto; /* 이미지의 위쪽 절반만 보이도록 높이 설정 */
+    clip-path: inset(0 0 50% 0); /* 아래쪽 절반을 잘라내기 */
+  }
+  .file-text {
+    margin: 20px auto 0;
+    position: absolute;
+    top: 100px;
+    left: 691px;
+    display: #888888;
+    margin-top: 10px; /* 텍스트 위쪽 여백 */
+    font-size: 15px; /* 텍스트 크기 */
+    color: black; /* 텍스트 색상 */
+    background-color: #bcbcbc;
+  }
+  .popup {
+    position: fixed; 
+    width: 300px; /* 너비 */
+    height: 400px; /* 높이 */
+    background-color: #ffffff; /* 배경색 */
+    border: 2px solid black; /* 테두리 */
+    top: 300px
+    left: 200px;
+    z-index: 20; /* 다른 요소 위에 표시 */
+    display: none; /* 초기 상태에서 보이지 않음 */
+    font-family: "VT323", monospace; /* 폰트 설정 */
+    color: black; /* 글자 색상 */
+    overflow-y: auto; /* 세로 스크롤 가능 */
+  
+  }
+  
+  .popup-header {
+    background: repeating-linear-gradient(
+          0deg, /* 각도 */
+          #919191, /* 줄무늬 색상 */
+          #919191 1px, /* 줄무늬 두께 */
+          #777777 1px, /* 줄무늬 색상 */
+          #777777 2px /* 줄무늬 두께 */
+      );
+    display: flex; /* Flexbox 사용 */
+    align-items: center; /* 세로 정렬 */
+    justify-content: center; /* 가로 정렬 */
+    padding: 0px; /* 여백 */
+    border-bottom: 2px solid black; /* 아래 테두리 */
+    font-weight: bold; /* 글자 두껍게 */
+    text-align: center; /* 중앙 정렬 */
+    box-shadow: inset 0 0 0 3px #ededed;
+  }
+  
+  .popup-content {
+      height: calc(100% - 50px); /* 헤더 높이를 제외한 나머지 높이 */
+      overflow-y: auto; /* 세로 스크롤 가능 */
+      padding: 10px; /* 내부 여백 */
+      user-select: none; /* 드래그 선택 방지 */
+  }
+  .popup-close {
+    font-size: 7pt;
+    background-color: #ededed; /* 닫기 버튼 색상 */
+    color: #ededed; /* 글자 색상 */
+    border: 2pt solid black; /* 테두리 없음 */
+    padding: 0 3px 0 3px; /* 여백 */
+    cursor: pointer; /* 커서 포인터 */
+    position: absolute; /* 절대 위치 */
+    top: 3px; /* 상단 여백 */
+    left: 14px; /* 우측 여백 */
+    outline: 2px solid #ededed;
+  }
+  .file-name{
+     margin: 0%; /* 기본 마진 제거 */
+     position: flex;
+     padding: 0 12px 0 12px;
+     background-color: #ededed;
+  }
+  /* 스크롤바 전체 스타일 */
+  .popup-content::-webkit-scrollbar {
+      width: 12px; /* 스크롤바 너비 */
+      
+  }
+  /* 스크롤바 배경 스타일 */
+  .popup-content::-webkit-scrollbar-track {
+      background: repeating-linear-gradient(
+          45deg, /* 각도 */
+          #919191, /* 줄무늬 색상 */
+          #919191 1px, /* 줄무늬 두께 */
+          #777777 1px, /* 줄무늬 색상 */
+          #777777 2px /* 줄무늬 두께 */
+      );
+      border: 1pt solid black;
+      height: 100%;
+  }
+  /* 스크롤바 버튼 스타일 */
+  .popup-content::-webkit-scrollbar-thumb {
+      background: #ededed; /* 스크롤바 색상 */
+      border: 1pt solid black;
+  }
+  /* 스크롤바 호버 스타일 */
+  .popup-content::-webkit-scrollbar-thumb:hover {
+      background: #555555; /* 호버 시 색상 변화 */
+  }
+  .popup {
+      position: fixed; /* 화면에 고정 */
+      width: 400px; /* 초기 너비 */
+      height: 400px; /* 초기 높이 */
+      background-color: #ffffff; /* 배경색 */
+      border: 2px solid black; /* 외부 테두리 */
+      top: calc(300px - 200px); /* 중앙 위치 조정 (300px - 높이의 절반) */
+      left: calc(400px - 200px); /* 중앙 위치 조정 (400px - 너비의 절반) */
+      z-index: 20; /* 다른 요소 위에 표시 */
+      overflow: hidden; /* 내용이 넘칠 경우 숨김 */
+      transform: translate(0, 0); /* 중앙 정렬을 위해 변환 없음 */
+  }
+  
+  
+  .popup-header {
+      background-color: #ededed; /* 배경색 */
+      padding: 10px; /* 여백 */
+      border-bottom: 2px solid black; /* 아래 테두리 */
+      font-weight: bold; /* 글자 두껍게 */
+      text-align: center; /* 중앙 정렬 */
+      height: 0px;
+  }
+  
+  .popup-content {
+      max-height: calc(100% - 50px); /* 헤더 높이를 제외한 나머지 높이 */
+      overflow-y: auto; /* 세로 스크롤 가능 */
+      padding: 10px; /* 내부 여백 */
+  }
+  
+  .resize-handle {
+      position: absolute; 
+      bottom: 0px; 
+      right: 0px; 
+      cursor: se-resize; /* 크기 조절 커서 */
+  }
+  
+  .resize-handle:after {
+      content: ' ';
+      display: block; 
+      width: 12px; 
+      height: 12px; 
+      opacity: 1; 
+      background-color: #a9a9a9;
+      border: 1px solid black;
+   
+  }
+  
