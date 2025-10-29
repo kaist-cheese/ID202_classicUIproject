@@ -31,7 +31,7 @@ const defaultHeight = 400; // 기본 높이
 
 function typeLine() {
     if (lineIndex < lines.length) {
-        document.getElementById("loading-text").innerText += lines[lineIndex] + '\n';
+        document.getElementById("loading-text").innerHTML += lines[lineIndex] + '\n';
         lineIndex++;
         setTimeout(typeLine, 300);
     } else {
@@ -40,9 +40,16 @@ function typeLine() {
 }
 
 function showLoading() {
-    document.querySelector('.loading').style.display = 'flex';
-    document.getElementById("loading-text").innerText = '';
-    typeLine();
+    const loadingElement = document.getElementById("loading");
+    const loadingTextElement = document.getElementById("loading-text");
+    
+    if (loadingElement && loadingTextElement) {
+        loadingElement.style.display = 'flex';
+        loadingTextElement.innerHTML = '';
+        setTimeout(typeLine, 500); // 잠시 대기 후 타이핑 시작
+    } else {
+        console.error("로딩 화면 요소를 찾을 수 없습니다.");
+    }
 }
 
 function goToLogin() {
@@ -109,17 +116,17 @@ function changeTextColorOnHover(color) {
 }
 
 window.onload = () => {
-    // 1. 기존 코드
-    showLoading();
-    document.getElementById('passwordInput').addEventListener('keypress', function(event) {
-        if (event.key === 'Enter') {
-            checkPassword();
-        }
-    });
-    document.querySelector('button').addEventListener('click', checkPassword);
-    document.querySelector('.login').style.display = 'flex'; // 로그인 페이지 미리 로드
-
-    // 2. 흩어져 있던 DOM 변수 할당
+    // 로딩 화면만 먼저 표시
+    showLoading();
+    
+    // 비밀번호 입력 이벤트 리스너
+    document.getElementById('passwordInput').addEventListener('keypress', function(event) {
+        if (event.key === 'Enter') {
+            checkPassword();
+        }
+    });
+    
+    // DOM 변수 할당
     appleLogo = document.getElementById('AppleLogo');
     dropdownMenu = document.getElementById('dropdownMenu');
     blackSquare = document.createElement('div');
@@ -154,14 +161,47 @@ window.onload = () => {
     });
 
     aboutButton.addEventListener('click', (event) => {
-        event.stopPropagation(); // 이벤트 전파 방지
-        dropdownMenu.style.display = 'none'; // 드롭다운 메뉴 숨기기
-        aboutBox.style.display = 'flex'; // AboutBox 표시
-
-        // AppleLogo 스타일 변경
-        appleLogo.style.clipPath = 'inset(50% 0 0 0)'; // 아랫부분만 보이도록
-        appleLogo.style.top = '-13px'; // AppleLogo를 65px 위로 올림
-        blackSquare.style.display = 'block'; // blackSquare 나타나기
+        event.stopPropagation();
+        dropdownMenu.style.display = 'none';
+        
+        const mainArea = document.querySelector('.main');
+        const mainRect = mainArea.getBoundingClientRect();
+        
+        // about-box 위치 계산 (메인 영역 내 중앙)
+        const aboutBox = document.getElementById('AboutBox');
+        aboutBox.style.left = ((mainRect.width - 300) / 2) + 'px';
+        aboutBox.style.top = ((mainRect.height - 180) / 2) + 'px';
+        
+        // 윤곽선 효과로 열기
+        aboutBox.style.display = 'flex';
+        aboutBox.style.background = 'transparent';
+        aboutBox.style.opacity = '0';
+        
+        let frame = 0;
+        const totalFrames = 14;
+        const frameInterval = setInterval(() => {
+            frame++;
+            const progress = frame / totalFrames;
+            
+            if (frame <= totalFrames / 2) {
+                aboutBox.style.opacity = progress.toString();
+                aboutBox.style.transform = `scale(${0.3 + (progress * 1.4)})`;
+            } else {
+                if (frame === Math.floor(totalFrames * 0.6)) {
+                    aboutBox.style.background = '#ededed';
+                }
+            }
+            
+            if (frame >= totalFrames) {
+                clearInterval(frameInterval);
+                aboutBox.style.transform = 'scale(1)';
+                aboutBox.style.opacity = '1';
+            }
+        }, 50);
+    
+        appleLogo.style.clipPath = 'inset(50% 0 0 0)';
+        appleLogo.style.top = '-13px';
+        blackSquare.style.display = 'block';
     });
 
     aboutBoxQuit.addEventListener('click', (event) => {
@@ -237,25 +277,22 @@ function goBackToLoading() {
 
 // 팝업 초기화 함수
 function resetPopup() {
-    console.log("--- resetPopup() 함수 실행됨 ---"); // <-- 디버깅 로그 1
-
-    if (popup) { // 'popup' 변수가 존재하는지 확인
-        console.log("'popup' 요소를 찾았습니다.", popup); // <-- 디버깅 로그 2
-
+    const popup = document.querySelector('.popup');
+    const mainArea = document.querySelector('.main');
+    
+    if (popup && mainArea) {
+        const mainRect = mainArea.getBoundingClientRect();
+        
+        // 기본 크기로 초기화
         popup.style.width = defaultWidth + 'px';
         popup.style.height = defaultHeight + 'px';
         
-        const newLeft = (fixedMaxLeft - defaultWidth) / 2 + 'px'; // "200px"
-        const newTop = (fixedMaxTop - defaultHeight) / 2 + 'px'; // "100px"
-
-        console.log("새로운 위치로 설정: ", "left:", newLeft, "top:", newTop); // <-- 디버깅 로그 3
+        // 메인 영역 내에서 중앙 정렬
+        const newLeft = (mainRect.width - defaultWidth) / 2;
+        const newTop = (mainRect.height - defaultHeight) / 2;
         
-        popup.style.left = newLeft; // 가운데 정렬
-        popup.style.top = newTop; // 가운데 정렬
-
-    } else {
-        // 만약 'popup' 변수가 null이나 undefined라면
-        console.error("치명적 오류: 'popup' 요소를 찾을 수 없습니다!"); // <-- 디버깅 로그 4
+        popup.style.left = newLeft + "px";
+        popup.style.top = Math.max(30, newTop) + "px"; // 메뉴바 아래로
     }
 }
 
@@ -263,11 +300,61 @@ function resetPopup() {
 function handleMouseDown() {
     isMouseDown = true;
     image.style.clipPath = 'inset(50% 0 0 0)';
-    image.style.top = '10px'; // 위로 10px 이동
-    text.style.backgroundColor = 'black'; // 하이라이트 효과 추가
-    text.style.color = '#ededed'; // 텍스트 색상 변경
-    popup.style.display = 'block'; // 사각형 표시
+    image.style.top = '10px';
+    text.style.backgroundColor = 'black';
+    text.style.color = '#ededed';
+    
+    const mainArea = document.querySelector('.main');
+    if (mainArea && popup) {
+        const mainRect = mainArea.getBoundingClientRect();
+        
+        // 초기 위치 계산
+        const newLeft = (mainRect.width - defaultWidth) / 2;
+        const newTop = Math.max(30, (mainRect.height - defaultHeight) / 2);
+        
+        // 초기 설정
+        popup.style.left = newLeft + "px";
+        popup.style.top = newTop + "px";
+        popup.style.display = 'block';
+        popup.style.background = 'transparent';
+        
+        // 팝업 내용과 헤더 숨기기
+        const content = popup.querySelector('.popup-content');
+        const header = popup.querySelector('.popup-header');
+        if (content) content.style.visibility = 'hidden';
+        if (header) header.style.visibility = 'hidden';
+
+        let frame = 0;
+        const totalFrames = 14;
+        const frameInterval = setInterval(() => {
+            frame++;
+            const progress = frame / totalFrames;
+            
+            // 프레임별 렌더링
+            if (frame <= totalFrames / 2) {
+                // 윤곽선 단계
+                popup.style.transform = `scale(${0.3 + (progress * 1.4)})`;
+            } else {
+                // 내용 채우기 단계
+                if (frame === Math.floor(totalFrames * 0.6)) {
+                    popup.style.background = '#fff';
+                    if (header) header.style.visibility = 'visible';
+                }
+                if (frame === Math.floor(totalFrames * 0.8)) {
+                    if (content) content.style.visibility = 'visible';
+                }
+            }
+            
+            // 마지막 프레임
+            if (frame >= totalFrames) {
+                clearInterval(frameInterval);
+                popup.style.transform = 'scale(1)';
+            }
+        }, 50); // 약 50ms 간격으로 프레임 갱신
+    }
 }
+
+// createFrameOutline 함수 제거 - 더 이상 필요하지 않음
 
 // 마우스 버튼을 떼면
 function handleMouseUp() {
@@ -284,97 +371,154 @@ function resetImageAndText() {
     }
 }
 
+// 리사이즈 초기화 및 이벤트 핸들러
 function initResize(e) {
-    window.addEventListener('mousemove', resize);
+    e.preventDefault();
+    e.stopPropagation();
+    
+    // 현재 팝업의 위치와 크기 저장
+    const popup = document.querySelector('.popup');
+    const startX = e.clientX;
+    const startY = e.clientY;
+    const startWidth = popup.offsetWidth;
+    const startHeight = popup.offsetHeight;
+
+    function handleResize(e) {
+        e.preventDefault();
+        const mainArea = document.querySelector('.main');
+        const mainRect = mainArea.getBoundingClientRect();
+        const popupRect = popup.getBoundingClientRect();
+
+        // 새로운 크기 계산
+        const width = startWidth + (e.clientX - startX);
+        const height = startHeight + (e.clientY - startY);
+
+        // 최소/최대 크기 제한
+        const minWidth = 200;
+        const minHeight = 150;
+        const maxWidth = mainRect.width - (popupRect.left - mainRect.left);
+        const maxHeight = mainRect.height - (popupRect.top - mainRect.top);
+
+        // 크기 적용
+        popup.style.width = Math.max(minWidth, Math.min(width, maxWidth)) + 'px';
+        popup.style.height = Math.max(minHeight, Math.min(height, maxHeight)) + 'px';
+    }
+
+    function stopResize() {
+        window.removeEventListener('mousemove', handleResize);
+        window.removeEventListener('mouseup', stopResize);
+    }
+
+    window.addEventListener('mousemove', handleResize);
     window.addEventListener('mouseup', stopResize);
-}
-
-function resize(e) {
-    const newWidth = e.clientX - popup.getBoundingClientRect().left;
-    const newHeight = e.clientY - popup.getBoundingClientRect().top + 50; // 헤더의 높이 추가
-
-    // 최대 너비와 최대 높이 제한
-    const maxWidth = 800;
-    const maxHeight = 570;
-
-    // 팝업 크기 설정
-    popup.style.width = Math.min(newWidth, maxWidth) + 'px';
-    popup.style.height = Math.min(newHeight, maxHeight) + 'px';
-
-    // 팝업의 중앙 위치 조정
-    updatePopupPosition();
-}
-
-function updatePopupPosition() {
-    const popupRect = popup.getBoundingClientRect();
-    const newLeft = Math.max(fixedMinLeft, Math.min(fixedMaxLeft - popupRect.width, (fixedMaxLeft - popupRect.width) / 2));
-    const newTop = Math.max(fixedMinTop, Math.min(fixedMaxTop - popupRect.height, (fixedMaxTop - popupRect.height) / 2));
-
-    popup.style.left = newLeft + "px";
-    popup.style.top = newTop + "px";
-}
-
-function stopResize() {
-    window.removeEventListener('mousemove', resize);
-    window.removeEventListener('mouseup', stopResize);
 }
 
 function dragElement(elmnt) {
     let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
-
-    // 헤더를 드래그할 수 있도록 설정
     elmnt.onmousedown = dragMouseDown;
 
     function dragMouseDown(e) {
         e = e || window.event;
         e.preventDefault();
-        // 마우스 커서 위치 저장
+        // 시작 위치 저장
         pos3 = e.clientX;
         pos4 = e.clientY;
+        
+        // 이벤트 리스너 등록
         document.onmouseup = closeDragElement;
-        // 마우스가 움직일 때마다 호출
         document.onmousemove = elementDrag;
     }
 
     function elementDrag(e) {
         e = e || window.event;
         e.preventDefault();
-        // 새로운 커서 위치 계산
+        
+        // 새로운 위치 계산
         pos1 = pos3 - e.clientX;
         pos2 = pos4 - e.clientY;
         pos3 = e.clientX;
         pos4 = e.clientY;
 
-        // 새로운 위치 계산
-        let newTop = popup.offsetTop - pos2;
-        let newLeft = popup.offsetLeft - pos1;
-
-        // 고정된 영역 내에서만 이동 가능하도록 설정
-        if (newTop < fixedMinTop) {
-            newTop = fixedMinTop; // 위쪽 벽에 부딪힐 때
-        } else if (newTop > fixedMaxTop - popup.offsetHeight) {
-            newTop = fixedMaxTop - popup.offsetHeight; // 아래쪽 벽에 부딪힐 때
+        const popup = elmnt.closest('.popup');
+        const mainArea = document.querySelector('.main');
+        if (popup && mainArea) {
+            const mainRect = mainArea.getBoundingClientRect();
+            const popupRect = popup.getBoundingClientRect();
+            
+            // 새로운 위치 계산
+            let newLeft = popup.offsetLeft - pos1;
+            let newTop = popup.offsetTop - pos2;
+            
+            // 메인 영역 안으로 제한
+            newLeft = Math.max(0, Math.min(newLeft, mainRect.width - popupRect.width));
+            newTop = Math.max(30, Math.min(newTop, mainRect.height - popupRect.height));
+            
+            popup.style.left = newLeft + "px";
+            popup.style.top = newTop + "px";
         }
-
-        if (newLeft < fixedMinLeft) {
-            newLeft = fixedMinLeft; // 왼쪽 벽에 부딪힐 때
-        } else if (newLeft > fixedMaxLeft - popup.offsetWidth) {
-            newLeft = fixedMaxLeft - popup.offsetWidth; // 오른쪽 벽에 부딪힐 때
-        }
-
-        // 요소의 새로운 위치 설정
-        popup.style.top = newTop + "px";
-        popup.style.left = newLeft + "px";
     }
 
     function closeDragElement() {
-        // 마우스 버튼이 떼어지면 멈춤
         document.onmouseup = null;
         document.onmousemove = null;
     }
 }
 
 function closePopup() {
-    resetPopup(); // 팝업 닫을 때 기본 위치와 크기로 초기화
-    popup.style.display = 'none'; // 팝업 닫기 기능 (예시)
+    popup.classList.remove('opening');
+    popup.style.display = 'none';
+    resetImageAndText();
 }
+
+// CRT 노이즈 효과 추가
+function createNoiseCanvas() {
+    const canvas = document.createElement('canvas');
+    canvas.style.position = 'absolute';
+    canvas.style.top = '0';
+    canvas.style.left = '0';
+    canvas.style.width = '100%';
+    canvas.style.height = '100%';
+    canvas.style.pointerEvents = 'none';
+    canvas.style.zIndex = '9997';
+    canvas.style.opacity = '0.1';
+    
+    const container = document.querySelector('.window-container');
+    container.appendChild(canvas);
+    
+    const ctx = canvas.getContext('2d');
+    
+    function resizeCanvas() {
+        canvas.width = container.offsetWidth;
+        canvas.height = container.offsetHeight;
+    }
+    
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+    
+    function generateNoise() {
+        const imageData = ctx.createImageData(canvas.width, canvas.height);
+        const data = imageData.data;
+        
+        for (let i = 0; i < data.length; i += 4) {
+            const noise = Math.random() * 255;
+            data[i] = noise;     // Red
+            data[i + 1] = noise; // Green
+            data[i + 2] = noise; // Blue
+            data[i + 3] = Math.random() * 50; // Alpha (투명도)
+        }
+        
+        ctx.putImageData(imageData, 0, 0);
+    }
+    
+    function animate() {
+        generateNoise();
+        requestAnimationFrame(animate);
+    }
+    
+    animate();
+}
+
+// 페이지 로드 시 노이즈 효과 시작
+window.addEventListener('load', () => {
+    createNoiseCanvas();
+});
