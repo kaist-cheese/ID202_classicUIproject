@@ -284,21 +284,6 @@ body {
     color: black; /* 텍스트 색상 */
     background-color: #bcbcbc;
   }
-  .popup {
-    position: fixed; 
-    width: 300px; /* 너비 */
-    height: 400px; /* 높이 */
-    background-color: #ffffff; /* 배경색 */
-    border: 2px solid black; /* 테두리 */
-    top: 300px
-    left: 200px;
-    z-index: 20; /* 다른 요소 위에 표시 */
-    display: none; /* 초기 상태에서 보이지 않음 */
-    font-family: "VT323", monospace; /* 폰트 설정 */
-    color: black; /* 글자 색상 */
-    overflow-y: auto; /* 세로 스크롤 가능 */
-  
-  }
   
   .popup-header {
     background: repeating-linear-gradient(
