@@ -359,8 +359,6 @@ body {
       height: 400px; /* 초기 높이 */
       background-color: #ffffff; /* 배경색 */
       border: 2px solid black; /* 외부 테두리 */
-      top: calc(300px - 200px); /* 중앙 위치 조정 (300px - 높이의 절반) */
-      left: calc(400px - 200px); /* 중앙 위치 조정 (400px - 너비의 절반) */
       z-index: 20; /* 다른 요소 위에 표시 */
       overflow: hidden; /* 내용이 넘칠 경우 숨김 */
       transform: translate(0, 0); /* 중앙 정렬을 위해 변환 없음 */
