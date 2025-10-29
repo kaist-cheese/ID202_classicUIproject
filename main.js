@@ -66,6 +66,7 @@ function checkPassword() {
             document.querySelector('.main').style.display = 'block'; // 메인 페이지 표시
             updateTime(); // 시간 업데이트 시작
             setInterval(updateTime, 60000); // 1분마다 시간 업데이트
+            resetPopup();
             document.body.style.cursor = 'auto'; // 커서 원래대로
         }, 2000); // 2초 /*반드시 수정*/
     } else{
@@ -233,8 +234,6 @@ function resetPopup() {
     popup.style.left = (fixedMaxLeft - defaultWidth) / 2 + 'px'; // 가운데 정렬
     popup.style.top = (fixedMaxTop - defaultHeight) / 2 + 'px'; // 가운데 정렬
 }
-
-resetPopup(); // 초기화 호출
 
 // 마우스 버튼을 누르고 있을 때
 function handleMouseDown() {
