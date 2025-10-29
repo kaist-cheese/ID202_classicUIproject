@@ -209,6 +209,24 @@ function updateTime() {
     document.getElementById('current-time').innerText = timeString;
 }
 
+function restart() {
+    const blackScreen = document.getElementById('blackScreen');
+    blackScreen.style.display = 'block'; // 검은 화면 보이기
+
+    setTimeout(() => {
+        blackScreen.style.display = 'none'; // 2초 후 검은 화면 숨기기
+        goBackToLoading(); // 함수 호출
+    }, 2000); // 2000ms = 2초
+}
+
+function goBackToLoading() {
+     document.querySelector('.main').style.display = 'none';
+     lineIndex = 0;
+     document.getElementById('loading-text').innerText = '';
+     showLoading();
+    console.log("Going back to loading...");
+}
+
 // 페이지가 로드될 때 시간 업데이트
 /*window.onload = function() {
     updateTime(); // 처음 실행
@@ -219,10 +237,26 @@ function updateTime() {
 
 // 팝업 초기화 함수
 function resetPopup() {
-    popup.style.width = defaultWidth + 'px';
-    popup.style.height = defaultHeight + 'px';
-    popup.style.left = (fixedMaxLeft - defaultWidth) / 2 + 'px'; // 가운데 정렬
-    popup.style.top = (fixedMaxTop - defaultHeight) / 2 + 'px'; // 가운데 정렬
+    console.log("--- resetPopup() 함수 실행됨 ---"); // <-- 디버깅 로그 1
+
+    if (popup) { // 'popup' 변수가 존재하는지 확인
+        console.log("'popup' 요소를 찾았습니다.", popup); // <-- 디버깅 로그 2
+
+        popup.style.width = defaultWidth + 'px';
+        popup.style.height = defaultHeight + 'px';
+        
+        const newLeft = (fixedMaxLeft - defaultWidth) / 2 + 'px'; // "200px"
+        const newTop = (fixedMaxTop - defaultHeight) / 2 + 'px'; // "100px"
+
+        console.log("새로운 위치로 설정: ", "left:", newLeft, "top:", newTop); // <-- 디버깅 로그 3
+        
+        popup.style.left = newLeft; // 가운데 정렬
+        popup.style.top = newTop; // 가운데 정렬
+
+    } else {
+        // 만약 'popup' 변수가 null이나 undefined라면
+        console.error("치명적 오류: 'popup' 요소를 찾을 수 없습니다!"); // <-- 디버깅 로그 4
+    }
 }
 
 // 마우스 버튼을 누르고 있을 때
