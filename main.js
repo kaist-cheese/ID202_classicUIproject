@@ -16,6 +16,19 @@ const loadingText = "ISEO OS Ⅱ.2.4\n" +
 const lines = loadingText.split('\n');
 let lineIndex = 0;
 
+let appleLogo, dropdownMenu, blackSquare, aboutBox, aboutButton, aboutBoxQuit;
+let image, text, popup, resizeHandle, popupHeader;
+let isMouseDown = false;
+
+// 팝업의 고정된 위치와 크기 설정
+const fixedMinLeft = 0;
+const fixedMaxLeft = 800; // 최대 X좌표
+const fixedMinTop = 30;
+const fixedMaxTop = 600; // 최대 Y좌표
+
+const defaultWidth = 400; // 기본 너비
+const defaultHeight = 400; // 기본 높이
+
 function typeLine() {
     if (lineIndex < lines.length) {
         document.getElementById("loading-text").innerText += lines[lineIndex] + '\n';
@@ -96,15 +109,90 @@ function changeTextColorOnHover(color) {
 }
 
 window.onload = () => {
-    showLoading();
-    document.getElementById('passwordInput').addEventListener('keypress', function(event) {
-        if (event.key === 'Enter') {
-            checkPassword();
+    // 1. 기존 코드
+    showLoading();
+    document.getElementById('passwordInput').addEventListener('keypress', function(event) {
+        if (event.key === 'Enter') {
+            checkPassword();
+        }
+    });
+    document.querySelector('button').addEventListener('click', checkPassword);
+    document.querySelector('.login').style.display = 'flex'; // 로그인 페이지 미리 로드
+
+    // 2. 흩어져 있던 DOM 변수 할당
+    appleLogo = document.getElementById('AppleLogo');
+    dropdownMenu = document.getElementById('dropdownMenu');
+    blackSquare = document.createElement('div');
+    blackSquare.className = 'black-square';
+    document.body.appendChild(blackSquare);
+    aboutBox = document.getElementById('AboutBox');
+    aboutButton = document.querySelector('.dropdown-button:first-child');
+    aboutBoxQuit = document.getElementById('AboutBoxQuit');
+    image = document.getElementById('centeredImage');
+    text = document.getElementById('fileText');
+    popup = document.getElementById('popup');
+    resizeHandle = document.querySelector('.resize-handle');
+    popupHeader = document.getElementById('popup-header');
+
+    // 3. 흩어져 있던 이벤트 리스너 할당
+    appleLogo.addEventListener('click', (event) => {
+        event.stopPropagation(); // 이벤트 전파 방지
+        const isVisible = dropdownMenu.style.display === 'block';
+
+        // 드롭다운 메뉴 보여주기/숨기기
+        dropdownMenu.style.display = isVisible ? 'none' : 'block';
+        blackSquare.style.display = isVisible ? 'none' : 'block'; // 검은 사각형 보여주기/숨기기
+
+        // AppleLogo 스타일 변경
+        if (!isVisible) {
+            appleLogo.style.clipPath = 'inset(50% 0 0 0)'; // 아랫부분만 보이도록
+            appleLogo.style.top = '-13px'; // AppleLogo를 65px 위로 올림
+        } else {
+            appleLogo.style.clipPath = 'inset(0 0 50% 0)'; // 원래 상태로 되돌리기
+            appleLogo.style.top = '4px'; // 원래 위치로 되돌리기
         }
     });
-    document.querySelector('button').addEventListener('click', checkPassword);
-    // 로그인 페이지 미리 로드
-    document.querySelector('.login').style.display = 'flex'; // 로그인 페이지 미리 로드
+
+    aboutButton.addEventListener('click', (event) => {
+        event.stopPropagation(); // 이벤트 전파 방지
+        dropdownMenu.style.display = 'none'; // 드롭다운 메뉴 숨기기
+        aboutBox.style.display = 'flex'; // AboutBox 표시
+
+        // AppleLogo 스타일 변경
+        appleLogo.style.clipPath = 'inset(50% 0 0 0)'; // 아랫부분만 보이도록
+        appleLogo.style.top = '-13px'; // AppleLogo를 65px 위로 올림
+        blackSquare.style.display = 'block'; // blackSquare 나타나기
+    });
+
+    aboutBoxQuit.addEventListener('click', (event) => {
+        event.stopPropagation(); // 이벤트 전파 방지
+        aboutBox.style.display = 'none'; // AboutBox 숨기기
+
+        // AppleLogo 스타일 원래대로 되돌리기
+        appleLogo.style.clipPath = 'inset(0 0 50% 0)'; // 원래 상태로 되돌리기
+        appleLogo.style.top = '4px'; // 원래 위치로 되돌리기
+        blackSquare.style.display = 'none'; // blackSquare 숨기기
+    });
+
+    document.addEventListener('click', (event) => {
+        // 드롭다운 메뉴가 열려 있으면 숨기기
+        if (dropdownMenu.style.display === 'block') {
+            dropdownMenu.style.display = 'none'; // 드롭다운 메뉴 숨기기
+            blackSquare.style.display = 'none'; // 검은 사각형 숨기기
+
+            // AppleLogo 스타일 원래대로 되돌리기
+            appleLogo.style.clipPath = 'inset(0 0 50% 0)'; // 원래 상태로 되돌리기
+            appleLogo.style.top = '4px'; // 원래 위치로 되돌리기
+        }
+    });
+
+    image.addEventListener('mousedown', handleMouseDown);
+    text.addEventListener('mousedown', handleMouseDown);
+    document.addEventListener('mouseup', handleMouseUp);
+    document.addEventListener('mouseleave', handleMouseUp);
+
+    resizeHandle.addEventListener('mousedown', initResize);
+    dragElement(popupHeader);
 }
 function updateTime() {
     const now = new Date();
@@ -127,105 +215,7 @@ function updateTime() {
     setInterval(updateTime, 60000); // 1분마다 시간 업데이트
 }*/
 
-const appleLogo = document.getElementById('AppleLogo');
-const dropdownMenu = document.getElementById('dropdownMenu');
-const blackSquare = document.createElement('div');
-blackSquare.className = 'black-square';
-document.body.appendChild(blackSquare);
 
-const aboutBox = document.getElementById('AboutBox');
-const aboutButton = document.querySelector('.dropdown-button:first-child'); // 첫 번째 버튼 (About)
-const aboutBoxQuit = document.getElementById('AboutBoxQuit'); // 닫기 버튼
-
-// 버튼 클릭 시 드롭다운 메뉴 토글
-appleLogo.addEventListener('click', (event) => {
-    event.stopPropagation(); // 이벤트 전파 방지
-    const isVisible = dropdownMenu.style.display === 'block';
-
-    // 드롭다운 메뉴 보여주기/숨기기
-    dropdownMenu.style.display = isVisible ? 'none' : 'block';
-    blackSquare.style.display = isVisible ? 'none' : 'block'; // 검은 사각형 보여주기/숨기기
-
-    // AppleLogo 스타일 변경
-    if (!isVisible) {
-        appleLogo.style.clipPath = 'inset(50% 0 0 0)'; // 아랫부분만 보이도록
-        appleLogo.style.top = '-13px'; // AppleLogo를 65px 위로 올림
-    } else {
-        appleLogo.style.clipPath = 'inset(0 0 50% 0)'; // 원래 상태로 되돌리기
-        appleLogo.style.top = '4px'; // 원래 위치로 되돌리기
-    }
-});
-
-// 드롭다운 버튼 클릭 시 AboutBox 표시 및 드롭다운 메뉴 숨기기
-aboutButton.addEventListener('click', (event) => {
-    event.stopPropagation(); // 이벤트 전파 방지
-    dropdownMenu.style.display = 'none'; // 드롭다운 메뉴 숨기기
-    aboutBox.style.display = 'flex'; // AboutBox 표시
-
-    // AppleLogo 스타일 변경
-    appleLogo.style.clipPath = 'inset(50% 0 0 0)'; // 아랫부분만 보이도록
-    appleLogo.style.top = '-13px'; // AppleLogo를 65px 위로 올림
-    blackSquare.style.display = 'block'; // blackSquare 나타나기
-});
-
-// 닫기 버튼 클릭 시 AboutBox 숨기기
-aboutBoxQuit.addEventListener('click', (event) => {
-    event.stopPropagation(); // 이벤트 전파 방지
-    aboutBox.style.display = 'none'; // AboutBox 숨기기
-
-    // AppleLogo 스타일 원래대로 되돌리기
-    appleLogo.style.clipPath = 'inset(0 0 50% 0)'; // 원래 상태로 되돌리기
-    appleLogo.style.top = '4px'; // 원래 위치로 되돌리기
-    blackSquare.style.display = 'none'; // blackSquare 숨기기
-});
-
-// 메뉴 밖 클릭 시 드롭다운 숨기기 및 AppleLogo 원래 상태로 되돌리기
-document.addEventListener('click', (event) => {
-    // 드롭다운 메뉴가 열려 있으면 숨기기
-    if (dropdownMenu.style.display === 'block') {
-        dropdownMenu.style.display = 'none'; // 드롭다운 메뉴 숨기기
-        blackSquare.style.display = 'none'; // 검은 사각형 숨기기
-
-        // AppleLogo 스타일 원래대로 되돌리기
-        appleLogo.style.clipPath = 'inset(0 0 50% 0)'; // 원래 상태로 되돌리기
-        appleLogo.style.top = '4px'; // 원래 위치로 되돌리기
-    }
-});
-
-
-function restart() {
-    const blackScreen = document.getElementById('blackScreen');
-    blackScreen.style.display = 'block'; // 검은 화면 보이기
-
-    setTimeout(() => {
-        blackScreen.style.display = 'none'; // 2초 후 검은 화면 숨기기
-        goBackToLoading(); // 함수 호출
-    }, 2000); // 2000ms = 2초
-}
-
-function goBackToLoading() {
-     document.querySelector('.main').style.display = 'none';
-     lineIndex = 0;
-     document.getElementById('loading-text').innerText = '';
-     showLoading();
-    console.log("Going back to loading...");
-}
-
-
-const image = document.getElementById('centeredImage');
-const text = document.getElementById('fileText');
-const popup = document.getElementById('popup');
-
-let isMouseDown = false;
-
-// 팝업의 고정된 위치와 크기 설정
-const fixedMinLeft = 0;
-const fixedMaxLeft = 800; // 최대 X좌표
-const fixedMinTop = 30;
-const fixedMaxTop = 600; // 최대 Y좌표
-
-const defaultWidth = 400; // 기본 너비
-const defaultHeight = 400; // 기본 높이
 
 // 팝업 초기화 함수
 function resetPopup() {
@@ -251,12 +241,6 @@ function handleMouseUp() {
     resetImageAndText(); // 원래 상태로 복원
 }
 
-// 마우스가 이미지 또는 텍스트 위에 있을 때만 이벤트 처리
-image.addEventListener('mousedown', handleMouseDown);
-text.addEventListener('mousedown', handleMouseDown);
-document.addEventListener('mouseup', handleMouseUp);
-document.addEventListener('mouseleave', handleMouseUp);
-
 function resetImageAndText() {
     if (!isMouseDown) {
         image.style.clipPath = 'inset(0 0 50% 0)';
@@ -265,12 +249,6 @@ function resetImageAndText() {
         text.style.color = 'black'; // 원래 텍스트 색상으로 복원
     }
 }
-
-const resizeHandle = document.querySelector('.resize-handle');
-const popupHeader = document.getElementById('popup-header');
-
-resizeHandle.addEventListener('mousedown', initResize);
-dragElement(popupHeader); // 헤더를 드래그 가능하게 설정
 
 function initResize(e) {
     window.addEventListener('mousemove', resize);
