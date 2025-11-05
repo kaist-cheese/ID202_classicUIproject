@@ -1,26 +1,25 @@
 body {
     margin: 0;
-    min-height: 100vh; /* Full viewport height */
-    width: 100vw; /* Full viewport width */
+    min-height: 100vh;
+    width: 100vw;
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #333; /* Adding a darker background to make the window stand out */
+    background-color: #333;
     font-family: "VT323", monospace;
     font-size: 19px;
     user-select: none;
     overflow: hidden;
-    position: fixed; /* 추가: 스크롤 방지 */
+    position: fixed;
 }
 
-/* Create a container for the main window */
 .window-container {
     width: 800px;
     height: 600px;
     position: relative;
     background-color: black;
     border-radius: 10px;
-    overflow: hidden; /* 추가: 내부 컨텐츠를 컨테이너 안으로 제한 */
+    overflow: hidden;
 }
 
 .window-container::before {
@@ -131,7 +130,7 @@ input {
     height: 600px;
     background-color: #959795;
     position: relative;
-    overflow: hidden; /* 수정: visible에서 hidden으로 변경 */
+    overflow: hidden;
     animation: flicker 0.3s infinite;
 }
 
@@ -168,8 +167,8 @@ button:hover {
 }
 
 .no-hover:hover {
-    background-color: transparent; /* 또는 원하는 색상 */
-    color: black; /* 또는 원하는 색상 */
+    background-color: transparent;
+    color: black;
 }
 
 .overlaygrey {
@@ -187,71 +186,99 @@ button:hover {
     width: 10px;
     height: 10px;
     background-color: #666666;
-    bottom: 20px; /* 하단 위치 조정 */
-    right: 20px; /* 우측 위치 조정 */
+    bottom: 20px;
+    right: 20px;
     cursor: pointer;
 }
 
 .menu-bar {
     width: 100%;
-    height: 30px; /* 메뉴 바 높이 */
-    background-color: #ededed; /* 배경색 */
+    height: 30px;
+    background-color: #ededed;
     display: flex;
     align-items: center;
-    z-index: 1px; /* 다른 요소 위에 표시 */
-    border-top-left-radius: 10px; /* 왼쪽 상단 모서리 둥글게 */
-    border-top-right-radius: 10px; /* 오른쪽 상단 모서리 둥글게 */
-    justify-content: flex-end; /* 오른쪽 정렬 */
+    z-index: 3;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    justify-content: flex-end;
+    position: relative;
 }
 
 .menu-item {
-    display: flex; /* flexbox 사용 */
-    align-items: center; /* 수직 정렬 */
-    color: black; /* 텍스트 색상 */
-    margin-left: 10px; /* 메뉴 항목 간격 (오른쪽 정렬을 위해 변경) */
+    display: flex;
+    align-items: center;
+    color: black;
+    margin-left: 10px;
     margin-right: 10px;
+    font-size: 16px;
+}
+
+#seo-text {
+    margin-left: auto;
+    padding-right: 5px;
 }
 
 .dropdown {
     position: absolute;
-    top: 30px; /* 메뉴 바 아래 위치 */
-    left: 0; /* 왼쪽 정렬 */
-    background-color: white; /* 배경색 */
-    z-index: 30; /* 다른 요소 위에 표시 */
+    top: 30px;
+    left: 15px;
+    background-color: white;
+    z-index: 30;
+    width: 100px;
+    border: 1px solid black;
+    box-sizing: content-box;
 }
 
 .dropdown ul {
-    list-style: none; /* 기본 리스트 스타일 제거 */
+    list-style: none;
     padding: 0;
-    margin: 0px;
-    color: black;
+    margin: 0;
 }
 
 .dropdown li {
-    padding: 5px 20px 5px 5px; /* 패딩 */
-    cursor: pointer; /* 커서 변경 */
+    padding: 5px 10px;
+    cursor: pointer;
+    height: 30px;
+    line-height: 30px;
+    box-sizing: border-box;
+}
+
+.dropdown li:hover {
+    background-color: black;
+    color: white;
+}
+
+.dropdown-button {
+    cursor: pointer;
+}
+
+.dropdown-button:hover {
+    color: white;
 }
 
 #AppleLogo {
-    z-index: 4; /* AppleLogo의 z-index를 높임 */
-    position: absolute; /* 절대 위치 설정 */
-    top: 4px; /* 상단에 위치 */
-    left: 15px; /* 왼쪽에 위치 */
-    cursor: pointer; /* 커서 스타일 추가 */
-    width: 15px; /* 너비를 15px로 설정 */
-    height: auto; /* 비율 유지 */
-    clip-path: inset(0 0 50% 0); /* 윗부분 절반만 보이도록 설정 */
+    z-index: 4;
+    position: absolute;
+    top: 4px;
+    left: 15px;
+    cursor: pointer;
+    width: 15px;
+    height: 15px;
+    clip-path: inset(0 0 50% 0);
+    transform: scaleY(2);
+    transform-origin: top;
 }
 
 .black-square {
     position: absolute;
-    top: 0; /* 드롭다운 메뉴가 열릴 때 위치 */
-    left: 7px; /* 왼쪽에 위치 */
-    width: 30px; /* AppleLogo와 같은 너비 */
-    height: 30px; /* 검은 사각형의 높이 */
-    background-color: black; /* 검은색 배경 */
-    z-index: 2px; /* AppleLogo 뒤에 위치 */
-    display: none; /* 초기 상태에서 숨김 */
+    top: 0;
+    left: 15px;
+    width: 15px;
+    height: 30px;
+    background-color: black;
+    z-index: 2;
+    display: none;
+    pointer-events: none;
 }
 
 .about-box {
@@ -261,184 +288,115 @@ button:hover {
     background-color: #ededed;
     border: 2px solid black;
     box-shadow: 4px 4px 0 black;
-    z-index: 100;
+    z-index: 1500;
     display: none;
-    transform-origin: center;
-}
-
-.about-content {
-    display: flex;
-    flex-direction: column; /* 세로 정렬 */
-    justify-content: center; /* 가운데 정렬 */
-    align-items: center; /* 가운데 정렬 */
-    height: 100%; /* 전체 높이 */
-}
-
-.about-title {
-    font-size: 21px; /* 폰트 크기 */
-    margin-top: 50px;
-    margin-bottom: 6px; /* 아래 여백 */
-}
-
-.about-subtitle {
-    font-size: 15px; /* 폰트 크기 */
-    margin-bottom: 60px; /* 아래 여백 */
-}
-
-.about-footer {
-    font-size: 18px; /* 폰트 크기 */
 }
 
 .about-close {
     position: absolute;
-    top: 5px; /* 상단 여백 */
-    left: 5px; /* 왼쪽 여백 */
-    width: 10px; /* 너비 */
-    height: 10px; /* 높이 */
-    background-color: black; /* 검은색 */
-    cursor: pointer; /* 커서 포인터 */
-}
-
-.highlight-link {
-    text-decoration: none; /* 기본 링크 스타일 제거 */
-    color: inherit; /* 기존 색상 유지 */
-    position: relative; /* 하이라이트 효과를 위한 위치 설정 */
-}
-
-.highlight-link:hover {
-    color: #ededed; /* 마우스 오버 시 색상 변경 */
-}
-
-.highlight-link:hover::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 1); /* 검은색 하이라이트 효과 */
-    z-index: -1; /* 텍스트 뒤에 위치하게 설정 */
-}
-
-#blackScreen {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 800px;
-    height: 600px;
+    top: 3px;
+    left: 3px;
+    width: 10px;
+    height: 10px;
     background-color: black;
-    border-radius: 10px; /* 둥근 모서리 */
-    z-index: 9999; /* 상위 레이어 */
-    display: none; /* 초기에는 보이지 않음 */
+    cursor: pointer;
 }
 
-.centered-image {
-    width: 30px;
-    display: block; /* 블록 요소로 설정 */
-    margin: 20px auto 0; /* 위쪽 여백 20px, 아래쪽 여백 0, 자동으로 중앙 정렬 */
-    position: absolute; /* 절대 위치 지정 */
-    top: 50px; /* 부모 요소의 50% 위치 */
-    left: 700px; /* 부모 요소의 50% 위치 */
-    height: auto; /* 이미지의 위쪽 절반만 보이도록 높이 설정 */
-    clip-path: inset(0 0 50% 0); /* 아래쪽 절반을 잘라내기 */
-}
-
-.file-text {
-    margin: 20px auto 0;
-    position: absolute;
-    top: 100px;
-    left: 691px;
-    display: #888888;
-    margin-top: 10px; /* 텍스트 위쪽 여백 */
-    font-size: 15px; /* 텍스트 크기 */
-    color: black; /* 텍스트 색상 */
-    background-color: #bcbcbc;
-}
-
-.popup-header {
-    background: repeating-linear-gradient(
-          0deg, /* 각도 */
-          #919191, /* 줄무늬 색상 */
-          #919191 1px, /* 줄무늬 두께 */
-          #777777 1px, /* 줄무늬 색상 */
-          #777777 2px /* 줄무늬 두께 */
-      );
-    display: flex; /* Flexbox 사용 */
-    align-items: center; /* 세로 정렬 */
-    justify-content: center; /* 가로 정렬 */
-    padding: 0px; /* 여백 */
-    border-bottom: 2px solid black; /* 아래 테두리 */
-    font-weight: bold; /* 글자 두껍게 */
-    text-align: center; /* 중앙 정렬 */
-    box-shadow: inset 0 0 0 3px #ededed;
-}
-
-.popup-content {
-    height: calc(100% - 50px); /* 헤더 높이를 제외한 나머지 높이 */
-    overflow-y: auto; /* 세로 스크롤 가능 */
-    padding: 10px; /* 내부 여백 */
-    user-select: none; /* 드래그 선택 방지 */
-}
-
-.popup-close {
-    font-size: 7pt;
-    background-color: #ededed; /* 닫기 버튼 색상 */
-    color: #ededed; /* 글자 색상 */
-    border: 2pt solid black; /* 테두리 없음 */
-    padding: 0 3px 0 3px; /* 여백 */
-    cursor: pointer; /* 커서 포인터 */
-    position: absolute; /* 절대 위치 */
-    top: 3px; /* 상단 여백 */
-    left: 14px; /* 우측 여백 */
-    outline: 2px solid #ededed;
-}
-
-.file-name {
-    margin: 0%; /* 기본 마진 제거 */
-    position: flex;
-    padding: 0 12px 0 12px;
-    background-color: #ededed;
-}
-
-/* 스크롤바 전체 스타일 */
-.popup-content::-webkit-scrollbar {
-    width: 12px; /* 스크롤바 너비 */
-}
-
-/* 스크롤바 배경 스타일 */
-.popup-content::-webkit-scrollbar-track {
-    background: repeating-linear-gradient(
-        45deg, /* 각도 */
-        #919191, /* 줄무늬 색상 */
-        #919191 1px, /* 줄무늬 두께 */
-        #777777 1px, /* 줄무늬 색상 */
-        #777777 2px /* 줄무늬 두께 */
-    );
-    border: 1pt solid black;
+.about-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
     height: 100%;
+    text-align: center;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    box-sizing: border-box;
 }
 
-/* 스크롤바 버튼 스타일 */
-.popup-content::-webkit-scrollbar-thumb {
-    background: #ededed; /* 스크롤바 색상 */
-    border: 1pt solid black;
+.about-title {
+    font-size: 21px;
+    margin: 30px 0 6px;
+    width: 100%;
+    text-align: center;
+    line-height: 1.2;
 }
 
-/* 스크롤바 호버 스타일 */
-.popup-content::-webkit-scrollbar-thumb:hover {
-    background: #555555; /* 호버 시 색상 변화 */
+.about-subtitle {
+    font-size: 15px;
+    margin: 0 0 10px;  /* margin-bottom을 40px에서 10px로 변경하여 30px 위로 이동 */
+    width: 100%;
+    text-align: center;
+    line-height: 1.2;
+    display: inline-block;
+    white-space: nowrap;
+}
+
+.about-subtitle a {
+    margin-right: 4px;
+}
+
+.about-footer {
+    font-size: 16px;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0 20px;
+    box-sizing: border-box;
+    position: absolute;
+    bottom: 20px;
+    left: 0;
 }
 
 .popup {
-    position: absolute; /* fixed에서 absolute로 변경 */
+    position: absolute;
     width: 400px;
     height: 400px;
     background-color: #ffffff;
     border: 2px solid black;
-    z-index: 1000;
+    z-index: 2000;
     overflow: hidden;
-    animation: flicker 0.3s infinite;
     transform-origin: center;
+}
+
+.popup-header {
+    background: repeating-linear-gradient(
+        0deg,
+        #919191,
+        #919191 1px,
+        #777777 1px,
+        #777777 2px
+    );
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border-bottom: 2px solid black;
+    font-weight: bold;
+    font-size: 15px;
+    text-align: center;
+    box-shadow: inset 0 0 0 3px #ededed;
+}
+
+.popup-close {
+    font-size: 7pt;
+    background-color: #ededed;
+    color: #ededed;
+    border: 2pt solid black;
+    padding: 0 3px;
+    cursor: pointer;
+    position: absolute;
+    top: 3px;
+    left: 14px;
+    outline: 2px solid #ededed;
+}
+
+.popup-content {
+    padding: 20px;
+    height: calc(100% - 62px);
+    overflow-y: auto;
 }
 
 .resize-handle {
@@ -450,147 +408,213 @@ button:hover {
     cursor: se-resize;
     z-index: 1001;
     background: linear-gradient(135deg, transparent 50%, #919191 50%);
-    border-left: 1px solid black;
-    border-top: 1px solid black;
 }
 
-.resize-handle::after {
-    content: '';
+.centered-image {
     position: absolute;
-    right: 0;
-    bottom: 0;
-    width: 0;
-    height: 0;
-    border-style: solid;
-    border-width: 0 0 15px 15px;
-    border-color: transparent transparent #a9a9a9 transparent;
+    top: 50px;
+    right: 50px;
+    width: 25px;
+    height: 70px;
+    cursor: pointer;
+    clip-path: inset(0 -50% 0 0);
+    object-fit: cover;
+    transition: none;
 }
 
-/* CRT 효과 */
+.file-text {
+    position: absolute;
+    top: 85px; /* 이미지 아래로 위치 조정 */
+    right: 35px;
+    cursor: pointer;
+    background-color: #bcbcbc;
+    padding: 2px 5px;
+    text-align: center;
+    font-size: 15px;
+    color: black;
+}
+
+#blackScreen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    z-index: 9999;
+    display: none;
+}
+
+.vignette-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 10000;
+    background: radial-gradient(circle, transparent 50%, rgba(0, 0, 0, 0) 50%);
+    opacity: 0;
+    transition: background 2s ease-in-out, opacity 2s ease-in-out;
+}
+
 @keyframes flicker {
-    0% {
-        opacity: 0.97;
-    }
-    5% {
-        opacity: 0.95;
-    }
-    10% {
-        opacity: 0.9;
-    }
-    15% {
-        opacity: 0.95;
-    }
-    20% {
-        opacity: 0.9;
-    }
-    25% {
-        opacity: 0.95;
-    }
-    30% {
-        opacity: 1;
-    }
+    0% { opacity: 0.97; }
+    5% { opacity: 0.95; }
+    10% { opacity: 0.9; }
+    15% { opacity: 0.95; }
+    20% { opacity: 0.9; }
+    25% { opacity: 0.95; }
+    30% { opacity: 1; }
 }
 
 @keyframes scanline {
-    0% {
-        transform: translateY(0);
-    }
-    100% {
-        transform: translateY(600px);
-    }
+    0% { transform: translateY(0); }
+    100% { transform: translateY(600px); }
 }
 
-@keyframes openWindow {
-    0% {
-        transform: scale(0.1);
-        opacity: 0.3;
-    }
-    20% {
-        transform: scale(0.3);
-        opacity: 0.5;
-    }
-    40% {
-        transform: scale(0.5);
-        opacity: 0.7;
-    }
-    60% {
-        transform: scale(0.7);
-        opacity: 0.8;
-    }
-    80% {
-        transform: scale(0.9);
-        opacity: 0.9;
-    }
-    100% {
-        transform: scale(1);
-        opacity: 1;
-    }
+@keyframes clipPathAnimation {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-40px); }
+    100% { transform: translateY(0); }
 }
 
-@keyframes afterImage {
-    0% {
-        opacity: 0.3;
-        transform: scale(0.95) translate(-2px, -2px);
-    }
-    100% {
-        opacity: 0;
-        transform: scale(1.05) translate(2px, 2px);
-    }
+.highlight-link {
+    text-decoration: none;
+    color: inherit;
 }
 
-@keyframes outlineAppear {
-    0% {
-        opacity: 0;
-        transform: scale(0.3);
-    }
-    25% {
-        opacity: 1;
-        transform: scale(0.5);
-        background: transparent;
-    }
-    50% {
-        transform: scale(0.7);
-        background: transparent;
-    }
-    75% {
-        transform: scale(0.9);
-    }
-    100% {
-        transform: scale(1);
-    }
+.highlight-link:hover {
+    text-decoration: underline;
 }
 
-@keyframes contentAppear {
-    0%, 70% {
-        opacity: 0;
-    }
-    100% {
-        opacity: 1;
-    }
-}
-
-.popup.opening {
-    animation: none;
-}
-
-.popup-outline {
+.terminal-icon {
     position: absolute;
+    top: 155px;  /* why?.txt 텍스트 아래로 이동 */
+    right: 50px;
+    width: 25px;
+    height: 25px;
+    background-color: #444;
+    cursor: pointer;
+}
+
+.terminal-popup {
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    background-color: #444444;
     border: 2px solid black;
+    z-index: 2000;
+    overflow: hidden;
+    transform-origin: center;
+}
+
+.terminal-popup .popup-header {
+    background: repeating-linear-gradient(
+        0deg,
+        #919191,
+        #919191 1px,
+        #777777 1px,
+        #777777 2px
+    );
+    height: 20px;
+    min-height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border-bottom: 2px solid black;
+    font-weight: bold;
+    text-align: center;
+    box-shadow: inset 0 0 0 3px #ededed;
+    position: relative;
+}
+
+.terminal-popup .popup-header .file-name {
+    font-size: 15px;
+    color: black;
+}
+
+.terminal-popup .popup-close {
+    font-size: 7pt;
+    background-color: #ededed;
+    color: #ededed;
+    border: 2pt solid black;
+    padding: 0 3px;
+    cursor: pointer;
+    position: absolute;
+    top: 3px;
+    left: 14px;
+    outline: 2px solid #ededed;
+    z-index: 1;
+}
+
+.terminal-content {
+    padding: 10px;
+    height: calc(100% - 22px);
+    overflow-y: auto;
+    background-color: #444444;
+    font-family: "VT323", monospace;
+    font-size: 15px;
+}
+
+.terminal-input-line {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 2px 0;
+    font-size: 15px;
+}
+
+.prompt {
+    color: white;
+    margin-right: 8px;
+    font-size: 15px;
+    font-weight: normal;
+    font-family: "VT323", monospace;
+}
+
+.terminal-input {
     background: transparent;
-    pointer-events: none;
-    z-index: 999;
+    border: none;
+    color: white;
+    font-family: "VT323", monospace;
+    font-size: 15px;
+    width: 100%;
+    outline: none;
+    padding: 0;
+    margin: 0;
 }
 
-.popup.opening {
-    animation: openWindow 0.5s ease-out;
+.terminal-output {
+    margin-bottom: 10px;
+    white-space: pre-wrap;
+    font-size: 15px;
+    color: white;
+    line-height: 1.4;
+    font-family: "VT323", monospace;
 }
 
-.popup-afterimage {
+.terminal-popup .resize-handle {
     position: absolute;
-    background: white;
-    border: 2px solid black;
-    pointer-events: none;
-    z-index: 999;
-    animation: afterImage 0.3s ease-out forwards;
+    bottom: 0;
+    right: 0;
+    width: 20px;
+    height: 20px;
+    cursor: se-resize;
+    z-index: 1001;
+    background: linear-gradient(135deg, transparent 50%, #919191 50%);
+}
+
+#terminalText {
+    position: absolute;
+    top: 155px;  /* why?.txt 텍스트 아래로 이동 */
+    right: 35px;
+    cursor: pointer;
+    background-color: #bcbcbc;
+    padding: 2px 5px;
+    text-align: center;
+    font-size: 15px;
+    color: black;
 }
 

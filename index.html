@@ -10,13 +10,18 @@
 </head>
 <body>
     <div class="window-container">
+        <audio id="backgroundMusic" loop>
+            <source src="./music/Kanye West - 2049 (full mixtape).mp3" type="audio/mpeg">
+        </audio>
         <div id="loading" class="loading">
             <pre id="loading-text"></pre>
         </div>
 
         <div class="overlaygrey" style="display: none;"></div>
 
-        <div class="login" style="display: none;"> <div class="reloadButton" onclick="goBackToLoading()"></div> <div class="login-box">
+        <div class="login" style="display: none;"> 
+            <div class="reloadButton" onclick="goBackToLoading()"></div> 
+            <div class="login-box">
                 <div class="inner-box">
                     <div style="font-size:19px; color:black">Welcome SEO</div>
                     <div style="font-size: 19px; margin-top: 25px; color:black">Passwordㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ</div>
@@ -34,54 +39,76 @@
             </div>
         </div>
 
-        <div class="overlaygrey" style="display: none;"></div> <div class="main">
+        <div class="overlaygrey" style="display: none;"></div>
+        <div class="main">
             <div class="menu-bar">
-                <img src="https://kanye2049.com/img/apple.png" id="AppleLogo" alt="Apple Logo" style="cursor: pointer;">
+                <img src="https://kanye2049.com/img/apple.png" id="AppleLogo" alt="Apple Logo">
                 <div class="dropdown" id="dropdownMenu" style="display: none;">
                     <ul>
-                        <li><dropdownbutton class="dropdown-button">About</dropdownbutton></li>
-                        <li><dropdownbutton class="dropdown-button" onclick="restart()">Restart</dropdownbutton></li> </ul>
+                        <li>About</li>
+                        <li onclick="restart()">Restart</li>
+                    </ul>
                 </div>
                 <div class="menu-item" id="seo-text">SEO</div>
                 <div class="menu-item" id="current-time"></div>
             </div>
             <div class="about-box" id="AboutBox" style="display: none;">
-                <div class="about-close" id="AboutBoxQuit"></div> <div class="about-content">
+                <div class="about-close" id="AboutBoxQuit"></div>
+                <div class="about-content">
                     <div class="about-title">The Macintosh Project</div>
-                    <div class="about-subtitle"><a href="https://www.instagram.com/ehakdcu_xx/" target="_blank" class="highlight-link">Inseong Seo</a> in South Korea</div>
+                    <div class="about-subtitle">
+                        <a href="https://www.instagram.com/ehakdcu_xx/" target="_blank" class="highlight-link">Inseong Seo</a>
+                        in South Korea
+                    </div>
+                    <div class="about-subtitle">
+                        Inspired by TostyDigital
+                    </div>
                     <div class="about-footer">ㅤ18607BㅤㅤㅤVersion Ⅱ.2.4 ©️2025 I.SEO</div>
                 </div>
             </div>
-            <div id="blackScreen"></div> <img src="https://kanye2049.com/img/text.png" alt="Text Image" class="centered-image" id="centeredImage">
+            <div id="blackScreen"></div>
+            <img src="https://kanye2049.com/img/text.png" alt="Text Image" class="centered-image" id="centeredImage">
             <div class="file-text" id="fileText">why?.txt</div>
+            <div class="terminal-icon" id="terminalIcon"></div>
+            <div class="file-text" id="terminalText">terminal</div>
+            
+            <div class="terminal-popup" id="terminalPopup" style="display: none;">
+                <div class="popup-header" id="terminal-header">
+                    <div class="popup-close" onclick="closeTerminal()">X</div>
+                    <span class="file-name">Terminal</span>
+                </div>
+                <div class="terminal-content">
+                    <div class="terminal-output" id="terminalOutput"></div>
+                    <div class="terminal-input-line">
+                        <span class="prompt">root~Macintosh128k~%</span>
+                        <input type="text" class="terminal-input" id="terminalInput">
+                    </div>
+                </div>
+                <div class="resize-handle"></div>
+            </div>
+            
             <div class="popup" id="popup" style="display: none;">
                 <div class="popup-header" id="popup-header">
+                    <div class="popup-close" onclick="closePopup()">X</div>
                     <span class="file-name">Why?.txt</span>
-                    <popup-close-button class="popup-close" onclick="closePopup()">X</popup-close-button>
                 </div>
                 <div class="popup-content">
-                    <p>Survival Journal of Island</p>
-                    <p>KANYE WON'T SAVE US.</p>
-                    <p>2022-2025</p>
-                    <p><strong>Day 1: Arrival</strong></p>
-                    <p>I woke up today on this deserted island. I feel lost and scared. It's just me, the thatched roof, and the endless sea (mountains). At 6 AM, I heard the morning song (parachute - John K) that pierced my eardrums, but I must focus on survival. I found a chicken shop near Dukgo. My survival instincts kicked in, and I built a small shelter using branches and leaves.</p>
-                    <p><strong>Day 30: Routine Established</strong></p>
-                    <p>A month has passed. I’ve established a daily routine: collecting points in the morning, being late in the afternoon, and sleeping or playing games during self-study time in the evening. I’ve spotted the "Highschool Dropout" ship several times in the distance. I wanted to signal for help, but I know I need to be self-sufficient.</p>
-                    <p><strong>Day 100: Learning and Adapting</strong></p>
-                    <p>Two months have gone by. I’m learning a lot about this island. I’ve figured out how to catch fish with simple tools and have been experimenting with various plants for food. I had a Chicken Day, and the warm meal really helps. The sight of that ship haunts me at night.</p>
-                    <p><strong>Day 200: Reflection</strong></p>
-                    <p>Nearly seven months have passed. There have been ups and downs. Some days I feel strong and capable, while other days the loneliness is overwhelming. I found a journal in a bag washed ashore, which has become an outlet for my feelings and thoughts. I miss human connection, but I’ve come to cherish my independence.</p>
-                    <p><strong>Day 365: One Year Mark</strong></p>
-                    <p>I’ve survived for a year! I’ve emerged from Daechita. The ship appeared again, but this time I feel more resolved. I’ve realized that this isolation has given me a unique perspective on life. I’ve grown stronger emotionally and physically.</p>
-                    <p><strong>Day 500: The Decision</strong></p>
-                    <p>A year and a half have passed. I saw the ship again, closer this time. My heart raced, but I felt a strange calm. I’ve built a life here. I want to signal for help, but I want to see this journey through to the end. I’ve found peace in solitude and want to see how far I can go.</p>
-                    <p><strong>Day 800: Almost Three Years</strong></p>
-                    <p>As I approach three years, I’m filled with mixed emotions. I’ve grown significantly. I’ve learned how to thrive in this environment. The "Highschool Dropout" has become a symbol of temptation, but I’ve resisted. This island has taught me resilience, and I feel proud of my journey.</p>
-                    <p><strong>Day 1000: Acceptance</strong></p>
-                    <p>Today marks three years on Island. I’ve decided to stay here. The challenges have shaped me, and I’ve found purpose in this place. I’ve learned to live with nature, and I feel more alive than ever. I may be alone, but I am not lonely. I am my own person now, a survivor in every sense of the word.</p>
-                    <p><strong>2025-12-12 Final Entry: Escape</strong></p>
-                    <p><strong>I will never return to this place.</strong>
-                    </p>
+                    <p>2022-2025-</p>
+                    <p><strong>Log Entry: The KMLA Atoll.</strong> These three years were defined by the primal act of survival. One hundred fifty souls, marooned.</p>
+                    <p>Escape—the pursuit of a 'better isle'—demanded the construction of vessels. Yet, far from a collective endeavor, it devolved into a zero-sum game of trampling others to craft a more resilient ship. Such was the nature of this place: relentlessly demanding, profoundly arduous.</p>
+                    <p>I, of course, refused the prescribed vessel. I built my own, guided by my own convictions and talents.</p>
+                    <p>Precious bonds were forged, yet they could not share my passage. That was the unwritten law of the atoll.</p>
+                    <p><strong>Log Entry: The Embarkation.</strong> The day I met the sea, the weight of three years' toil felt like the tide itself. The voyage was no gentle passage. Snow fell, rains lashed, and thunder articulated the chaos.</p>
+                    <p>Still, cessation was not an option. I pressed onward. I navigated past the specters of companions who could not complete this journey... I made landfall on a new island, designated 'KAIST'.</p>
+                    <p><strong>Log Entry: The KAIST Archipelago.</strong> I had anticipated a different topography of existence. A new environment, a new life. I expected tranquility.</p>
+                    <p>But the inhabitants here are merely inebriated with the relief of 'arrival' and the narcotic of 'achievement.' The essence remains unchanged.</p>
+                    <p>Here, too, survival is the fundamental imperative. Here, too, exodus is the eventual necessity.</p>
+                    <p>At times, I find myself nostalgic for the KMLA atoll. At least there, a rigid cartography of 'do's' and 'don'ts' existed. Here, even that rudimentary framework is absent.</p>
+                    <p><strong>Log Entry: The Present.</strong> And so, I build again. A vessel of unprecedented scale. The elder inhabitants offer no wisdom; only I can be the architect of this design.</p>
+                    <p>Most who arrived with me are still paralyzed by indecision, contemplating the very nature of their craft—a simple sailboat, a formidable warship, perhaps a humble fishing boat. They hesitate.</p>
+                    <p>I... I know the form of my vessel. And yet... The psychic weight is immense. It is all simply too much.</p>
+                    <p>I long for egress. To return to the origin point, the 'terra firma' whence I came. But there is no time for such pilgrimages. I am consumed by the ornamentation of my ship, the calibration of its engine for a farther, truer voyage.</p>
+                    <p>...That is my one desire.</p>
                 </div>
                 <div class="resize-handle"></div>
             </div>
