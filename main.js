@@ -456,14 +456,41 @@ function createDestructionEffect(x, y) {
 }
 
 function handleGlobalKeyPress(event) {
+    // --- ▼▼▼ [추가] 입력 필드 확인 ▼▼▼ ---
+    const terminalInput = document.getElementById('terminalInput');
+    const passwordInput = document.getElementById('passwordInput');
+
+    // 1. 비밀번호 입력창에 타이핑 중이면 아무것도 하지 않음
+    if (passwordInput && document.activeElement === passwordInput) {
+        return; 
+    }
+    // 2. 터미널 입력창에 타이핑 중이면 아무것도 하지 않음
+    if (terminalInput && document.activeElement === terminalInput) {
+        return; 
+    }
+    // --- ▲▲▲ [추가] 입력 필드 확인 끝 ---
+
+
     const backgroundMusic = document.getElementById('backgroundMusic');
     
-    // 숫자키(0-9) 입력 처리
+    // 3. 기존 숫자키(0-9) 음악 제어 로직 (유지)
     if (event.key >= '0' && event.key <= '9' && backgroundMusic) {
         const randomPosition = Math.random() * backgroundMusic.duration;
         backgroundMusic.currentTime = randomPosition;
-        return;
+        return; // 파괴 효과를 일으키지 않고 종료
     }
+
+    // --- ▼▼▼ [추가] 파괴 효과 로직 ▼▼▼ ---
+    
+    // 4. 그 외의 모든 키 입력은 파괴 효과를 일으킴
+    // 화면 범위(800x600) 내에서 랜덤 좌표 계산
+    // Y좌표는 메뉴 바(30px) 아래부터 시작
+    const randomX = Math.random() * fixedMaxLeft; // 0 ~ 800
+    const randomY = (Math.random() * (fixedMaxTop - fixedMinTop)) + fixedMinTop; // 30 ~ 600
+
+    // 5. 이미 존재하는 createDestructionEffect 함수 호출
+    createDestructionEffect(randomX, randomY);
+    // --- ▲▲▲ [추가] 파괴 효과 로직 끝 ---
 }
 
 function createVignetteEffect() {
