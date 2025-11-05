@@ -11,6 +11,7 @@ const loadingText = "ISEO OS Ⅱ.3.4\n" +
     "Designed in South Korea at 800, 291 Daehak-ro, Yuseong-gu, Daejeon 34141, Republic of Korea. 34141\n" +
     "\n" +
     "Use Earphones in public area\n" +
+    "paskey:0000 (default)\n" +
     "\n" +
     "\n" +
     "Press Any Key to boot system ...";
