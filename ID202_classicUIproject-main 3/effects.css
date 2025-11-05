@@ -1,0 +1,620 @@
+body {
+    margin: 0;
+    min-height: 100vh;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #333;
+    font-family: "VT323", monospace;
+    font-size: 19px;
+    user-select: none;
+    overflow: hidden;
+    position: fixed;
+}
+
+.window-container {
+    width: 800px;
+    height: 600px;
+    position: relative;
+    background-color: black;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.window-container::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: repeating-linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 0.15),
+        rgba(0, 0, 0, 0.15) 1px,
+        transparent 1px,
+        transparent 2px
+    );
+    pointer-events: none;
+    animation: scanline 10s linear infinite;
+    z-index: 9998;
+}
+
+.window-container::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAABmJLR0QA/wD/AP+gvaeTAAAA30lEQVRoge3ZMQ6CQBRFUYzGxkIbe1fh/mtw/66wtxAbE2NhAVQWkDAiKDP/z30n+dXjFZPhFpimQwh1ZOZJRAYRuarquKrqKCIDM0+ZeTrXOQyo8wHgxtx2RBwWaRqRiFhk7tvM3K/R9Ig4ELHmo2uj6dxE1rzQtFXQdET8IKKFTv1pKxeaTmTeI6KFDvxpKxE0/UTT/6Lp0fNpevSKT9OjRxaaHjmabvgSTh4Ct+/jzrWqr0dEjsz8Zu6XzPzKzE8ROVd9/moJwB3AqOqNqo4Abjg0pwMwAXgAeAJ4A/gA0dJQ38KtxYgAAAAASUVORK5CYII=");
+    opacity: 0.03;
+    pointer-events: none;
+    z-index: 9999;
+}
+
+.loading,
+.login,
+.main {
+    display: none;
+    height: 600px;
+    width: 800px;
+    border-radius: 10px;
+    position: absolute;
+}
+
+.loading {
+    display: flex;
+    height: 600px;
+    width: 800px;
+    background-color: black;
+    color: white;
+    z-index: 10;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    position: absolute;
+    top: 0;
+    left: 0;
+    animation: flicker 0.3s infinite;
+}
+
+#loading-text {
+    color: white;
+    padding: 20px;
+    white-space: pre-line;
+    font-family: "VT323", monospace;
+    font-size: 19px;
+}
+
+.login {
+    border-radius: 10px;
+    background-color: #959795;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 5;
+    animation: flicker 0.3s infinite;
+}
+
+.inner-box {
+    width: 500px;
+    height: 220px;
+    background: #ededed;
+    border: 2px solid black;
+    outline: 2px solid #ededed;
+    box-shadow: 0 0 0 4px black;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+input {
+    width: 246px;
+    height: 22px;
+    background-color: transparent;
+    border: 2px solid black;
+    font-size: 26px;
+    margin-bottom: 2px;
+    outline: none;
+}
+
+.main {
+    width: 800px;
+    height: 600px;
+    background-color: #959795;
+    position: relative;
+    overflow: hidden;
+    animation: flicker 0.3s infinite;
+}
+
+button {
+    margin-top: 25px;
+    width: 116px;
+    height: 20px;
+    border: 1px solid black;
+    outline: 2px solid #ededed;
+    border-radius: 5px;
+    box-shadow: 0 0 0 4px black;
+    cursor: pointer;
+    font-family: "VT323", monospace;
+    font-size: 17px;
+    position: relative;
+    margin-bottom: 20px;
+    color: black;
+}
+
+button:hover {
+    background-color: black;
+    color: #ededed;
+}
+
+.forgot-password {
+    cursor: pointer;
+    color: black;
+    position: relative;
+}
+
+.forgot-password:hover {
+    background-color: Black;
+    color: #ededed;
+}
+
+.no-hover:hover {
+    background-color: transparent;
+    color: black;
+}
+
+.overlaygrey {
+    position: flex-start;
+    width: 800px;
+    height: 600px;
+    background-color: #959795;
+    display: none;
+    z-index: 15;
+    border-radius: 10px;
+}
+
+.reloadButton {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background-color: #666666;
+    bottom: 20px;
+    right: 20px;
+    cursor: pointer;
+}
+
+.menu-bar {
+    width: 100%;
+    height: 30px;
+    background-color: #ededed;
+    display: flex;
+    align-items: center;
+    z-index: 3;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    justify-content: flex-end;
+    position: relative;
+}
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    color: black;
+    margin-left: 10px;
+    margin-right: 10px;
+    font-size: 16px;
+}
+
+#seo-text {
+    margin-left: auto;
+    padding-right: 5px;
+}
+
+.dropdown {
+    position: absolute;
+    top: 30px;
+    left: 15px;
+    background-color: white;
+    z-index: 30;
+    width: 100px;
+    border: 1px solid black;
+    box-sizing: content-box;
+}
+
+.dropdown ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.dropdown li {
+    padding: 5px 10px;
+    cursor: pointer;
+    height: 30px;
+    line-height: 30px;
+    box-sizing: border-box;
+}
+
+.dropdown li:hover {
+    background-color: black;
+    color: white;
+}
+
+.dropdown-button {
+    cursor: pointer;
+}
+
+.dropdown-button:hover {
+    color: white;
+}
+
+#AppleLogo {
+    z-index: 4;
+    position: absolute;
+    top: 4px;
+    left: 15px;
+    cursor: pointer;
+    width: 15px;
+    height: 15px;
+    clip-path: inset(0 0 50% 0);
+    transform: scaleY(2);
+    transform-origin: top;
+}
+
+.black-square {
+    position: absolute;
+    top: 0;
+    left: 15px;
+    width: 15px;
+    height: 30px;
+    background-color: black;
+    z-index: 2;
+    display: none;
+    pointer-events: none;
+}
+
+.about-box {
+    position: absolute;
+    width: 300px;
+    height: 180px;
+    background-color: #ededed;
+    border: 2px solid black;
+    box-shadow: 4px 4px 0 black;
+    z-index: 1500;
+    display: none;
+}
+
+.about-close {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 10px;
+    height: 10px;
+    background-color: black;
+    cursor: pointer;
+}
+
+.about-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    height: 100%;
+    text-align: center;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.about-title {
+    font-size: 21px;
+    margin: 30px 0 6px;
+    width: 100%;
+    text-align: center;
+    line-height: 1.2;
+}
+
+.about-subtitle {
+    font-size: 15px;
+    margin: 0 0 10px;  /* margin-bottom을 40px에서 10px로 변경하여 30px 위로 이동 */
+    width: 100%;
+    text-align: center;
+    line-height: 1.2;
+    display: inline-block;
+    white-space: nowrap;
+}
+
+.about-subtitle a {
+    margin-right: 4px;
+}
+
+.about-footer {
+    font-size: 16px;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0 20px;
+    box-sizing: border-box;
+    position: absolute;
+    bottom: 20px;
+    left: 0;
+}
+
+.popup {
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    background-color: #ffffff;
+    border: 2px solid black;
+    z-index: 2000;
+    overflow: hidden;
+    transform-origin: center;
+}
+
+.popup-header {
+    background: repeating-linear-gradient(
+        0deg,
+        #919191,
+        #919191 1px,
+        #777777 1px,
+        #777777 2px
+    );
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border-bottom: 2px solid black;
+    font-weight: bold;
+    font-size: 15px;
+    text-align: center;
+    box-shadow: inset 0 0 0 3px #ededed;
+}
+
+.popup-close {
+    font-size: 7pt;
+    background-color: #ededed;
+    color: #ededed;
+    border: 2pt solid black;
+    padding: 0 3px;
+    cursor: pointer;
+    position: absolute;
+    top: 3px;
+    left: 14px;
+    outline: 2px solid #ededed;
+}
+
+.popup-content {
+    padding: 20px;
+    height: calc(100% - 62px);
+    overflow-y: auto;
+}
+
+.resize-handle {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 20px;
+    height: 20px;
+    cursor: se-resize;
+    z-index: 1001;
+    background: linear-gradient(135deg, transparent 50%, #919191 50%);
+}
+
+.centered-image {
+    position: absolute;
+    top: 50px;
+    right: 50px;
+    width: 25px;
+    height: 70px;
+    cursor: pointer;
+    clip-path: inset(0 -50% 0 0);
+    object-fit: cover;
+    transition: none;
+}
+
+.file-text {
+    position: absolute;
+    top: 85px; /* 이미지 아래로 위치 조정 */
+    right: 35px;
+    cursor: pointer;
+    background-color: #bcbcbc;
+    padding: 2px 5px;
+    text-align: center;
+    font-size: 15px;
+    color: black;
+}
+
+#blackScreen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    z-index: 9999;
+    display: none;
+}
+
+.vignette-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 10000;
+    background: radial-gradient(circle, transparent 50%, rgba(0, 0, 0, 0) 50%);
+    opacity: 0;
+    transition: background 2s ease-in-out, opacity 2s ease-in-out;
+}
+
+@keyframes flicker {
+    0% { opacity: 0.97; }
+    5% { opacity: 0.95; }
+    10% { opacity: 0.9; }
+    15% { opacity: 0.95; }
+    20% { opacity: 0.9; }
+    25% { opacity: 0.95; }
+    30% { opacity: 1; }
+}
+
+@keyframes scanline {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(600px); }
+}
+
+@keyframes clipPathAnimation {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-40px); }
+    100% { transform: translateY(0); }
+}
+
+.highlight-link {
+    text-decoration: none;
+    color: inherit;
+}
+
+.highlight-link:hover {
+    text-decoration: underline;
+}
+
+.terminal-icon {
+    position: absolute;
+    top: 155px;  /* why?.txt 텍스트 아래로 이동 */
+    right: 50px;
+    width: 25px;
+    height: 25px;
+    background-color: #444;
+    cursor: pointer;
+}
+
+.terminal-popup {
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    background-color: #444444;
+    border: 2px solid black;
+    z-index: 2000;
+    overflow: hidden;
+    transform-origin: center;
+}
+
+.terminal-popup .popup-header {
+    background: repeating-linear-gradient(
+        0deg,
+        #919191,
+        #919191 1px,
+        #777777 1px,
+        #777777 2px
+    );
+    height: 20px;
+    min-height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border-bottom: 2px solid black;
+    font-weight: bold;
+    text-align: center;
+    box-shadow: inset 0 0 0 3px #ededed;
+    position: relative;
+}
+
+.terminal-popup .popup-header .file-name {
+    font-size: 15px;
+    color: black;
+}
+
+.terminal-popup .popup-close {
+    font-size: 7pt;
+    background-color: #ededed;
+    color: #ededed;
+    border: 2pt solid black;
+    padding: 0 3px;
+    cursor: pointer;
+    position: absolute;
+    top: 3px;
+    left: 14px;
+    outline: 2px solid #ededed;
+    z-index: 1;
+}
+
+.terminal-content {
+    padding: 10px;
+    height: calc(100% - 22px);
+    overflow-y: auto;
+    background-color: #444444;
+    font-family: "VT323", monospace;
+    font-size: 15px;
+}
+
+.terminal-input-line {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 2px 0;
+    font-size: 15px;
+}
+
+.prompt {
+    color: white;
+    margin-right: 8px;
+    font-size: 15px;
+    font-weight: normal;
+    font-family: "VT323", monospace;
+}
+
+.terminal-input {
+    background: transparent;
+    border: none;
+    color: white;
+    font-family: "VT323", monospace;
+    font-size: 15px;
+    width: 100%;
+    outline: none;
+    padding: 0;
+    margin: 0;
+}
+
+.terminal-output {
+    margin-bottom: 10px;
+    white-space: pre-wrap;
+    font-size: 15px;
+    color: white;
+    line-height: 1.4;
+    font-family: "VT323", monospace;
+}
+
+.terminal-popup .resize-handle {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 20px;
+    height: 20px;
+    cursor: se-resize;
+    z-index: 1001;
+    background: linear-gradient(135deg, transparent 50%, #919191 50%);
+}
+
+#terminalText {
+    position: absolute;
+    top: 155px;  /* why?.txt 텍스트 아래로 이동 */
+    right: 35px;
+    cursor: pointer;
+    background-color: #bcbcbc;
+    padding: 2px 5px;
+    text-align: center;
+    font-size: 15px;
+    color: black;
+}
+
