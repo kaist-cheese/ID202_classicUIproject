@@ -1,0 +1,172 @@
+/* 메뉴바 관련 스타일 */
+.menu-bar {
+    width: 100%;
+    height: 30px;
+    background-color: #ededed;
+    display: flex;
+    align-items: center;
+    z-index: 3;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    justify-content: flex-end;
+    position: relative;
+    overflow: visible;
+}
+
+#AppleLogo {
+    position: absolute;
+    top: 4px;
+    left: 15px;
+    cursor: pointer;
+    width: 30px; /* 2배 크기로 수정 */
+    height: 30px; /* 2배 크기로 수정 */
+    clip-path: inset(0 0 50% 0);
+    z-index: 4;
+}
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    color: black;
+    margin-left: 10px;
+    margin-right: 10px;
+    font-size: 16px;
+}
+
+#seo-text {
+    margin-left: auto;
+    padding-right: 5px;
+}
+
+/* 드롭다운 메뉴 컨테이너 */
+.dropdown {
+    position: absolute;
+    top: 30px;
+    left: 15px;
+    background-color: white;
+    z-index: 30;
+    min-width: 100px;
+    border: 1px solid black;
+}
+
+.dropdown ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.dropdown li {
+    padding: 5px 10px;
+    cursor: pointer;
+    position: relative;
+}
+
+.dropdown li:hover {
+    background-color: black;
+    color: white;
+}
+
+.dropdown-button:hover {
+    background-color: black;
+    color: white;
+}
+
+/* 검은 배경 수정 */
+.black-square {
+    position: absolute;
+    top: 0;
+    left: 15px;
+    width: 15px;
+    height: 30px;
+    background-color: black;
+    z-index: 2;
+    display: none;
+}
+
+/* 팝업 관련 스타일 */
+.popup {
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    background-color: #ffffff;
+    border: 2px solid black;
+    z-index: 2000;
+    overflow: hidden;
+    transform-origin: center;
+}
+
+.popup-header {
+    background: repeating-linear-gradient(
+        0deg,
+        #919191,
+        #919191 1px,
+        #777777 1px,
+        #777777 2px
+    );
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border-bottom: 2px solid black;
+    font-weight: bold;
+    text-align: center;
+    box-shadow: inset 0 0 0 3px #ededed;
+}
+
+.popup-close {
+    font-size: 7pt;
+    background-color: #ededed;
+    color: #ededed;
+    border: 2pt solid black;
+    padding: 0 3px;
+    cursor: pointer;
+    position: absolute;
+    top: 3px;
+    left: 14px;
+    outline: 2px solid #ededed;
+}
+
+/* About 박스 스타일 */
+.about-box {
+    position: absolute;
+    width: 300px;
+    height: 180px;
+    background-color: #ededed;
+    border: 2px solid black;
+    box-shadow: 4px 4px 0 black;
+    z-index: 1500;
+    display: none;
+    transform-origin: center;
+}
+
+.about-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    text-align: center;
+}
+
+.about-title {
+    font-size: 21px;
+    margin-top: 30px;
+    margin-bottom: 6px;
+}
+
+.about-subtitle {
+    font-size: 15px;
+    margin-bottom: 40px;
+}
+
+.about-footer {
+    font-size: 16px;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0 20px;
+    box-sizing: border-box;
+    position: absolute;
+    bottom: 20px;
+    left: 0;
+}

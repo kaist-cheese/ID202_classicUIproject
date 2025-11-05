@@ -1,0 +1,57 @@
+/* 깜빡임 효과 */
+@keyframes flicker {
+    0% { opacity: 0.97; }
+    5% { opacity: 0.95; }
+    10% { opacity: 0.9; }
+    15% { opacity: 0.95; }
+    20% { opacity: 0.9; }
+    25% { opacity: 0.95; }
+    30% { opacity: 1; }
+}
+
+/* 스캔라인 효과 */
+@keyframes scanline {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(600px); }
+}
+
+/* 팝업 열기 애니메이션 */
+@keyframes openWindow {
+    0% {
+        transform: scale(0.3);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(0.7);
+        opacity: 0.5;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* 잔상 효과 */
+@keyframes afterImage {
+    0% {
+        opacity: 0.3;
+        transform: scale(0.95) translate(-2px, -2px);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(1.05) translate(2px, 2px);
+    }
+}
+
+/* 애니메이션 적용 클래스 */
+.flicker-effect {
+    animation: flicker 0.3s infinite;
+}
+
+.scanline-effect {
+    animation: scanline 10s linear infinite;
+}
+
+.opening-animation {
+    animation: openWindow 0.7s steps(14) forwards;
+}
